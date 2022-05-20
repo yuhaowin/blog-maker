@@ -8,14 +8,14 @@ jobs:
       - name: make cider executable
         run: chmod +x ./cider
       - name: run cider to generate server site
-        run: ./cider -o ../server
+        run: ./cider -o ../blog
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
-          SOURCE: ../server
+          SOURCE: ../blog
           REMOTE_HOST: www.yuhaowin.com
           REMOTE_USER: root
-          TARGET: /root/temp
+          TARGET: /root/app/nginx/html/
           EXCLUDE:
