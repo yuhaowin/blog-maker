@@ -1,0 +1,21 @@
+name: push-to-server
+on: [ push ]
+jobs:
+  check-bats-version:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: make cider executable
+        run: chmod +x ./cider
+      - name: run cider to generate server site
+        run: ./cider -o ../server
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: ../server
+          REMOTE_HOST: www.yuhaowin.com
+          REMOTE_USER: root
+          TARGET: /root/temp
+          EXCLUDE:

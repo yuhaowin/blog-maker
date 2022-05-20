@@ -20,8 +20,6 @@ jobs:
         run: chmod +x ./cider
       - name: run cider to generate the entire site
         run: ./cider -o ../public
-      - name: run cider to generate server site
-        run: ./cider -o ../server
 
       - name: sync resource
         run: rsync -avr --progress ./rs/images ../public/ --delete
@@ -30,14 +28,3 @@ jobs:
         run: git config --global user.name action-bot && git config --global user.email actionbot@github.com
       - name: Deploy
         run: cd ../public && git add . && git commit -m 'update' && git push origin main
-
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: -rltgoDzvO --delete
-          SOURCE: ../server
-          REMOTE_HOST: www.yuhaowin.com
-          REMOTE_USER: root
-          TARGET: /root/temp
-          EXCLUDE:
