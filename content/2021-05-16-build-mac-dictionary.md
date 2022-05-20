@@ -1,12 +1,6 @@
----
-title: '编译自己的 Mac 词典'
-date: 2021-04-16 10:28:28
-tags: []
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2021/12/08/001502.png
-isTop: false
----
+# 编译自己的 Mac 词典
+
+![](https://image.yuhaowin.com/2021/12/08/001502.png)
 
 + 下载词典文件
 
@@ -14,7 +8,7 @@ isTop: false
 
 + [安装Command Line Tools for Xcode](https://link.jianshu.com/?t=https%3A%2F%2Fblog.csdn.net%2Fchenyufeng1991%2Farticle%2Fdetails%2F47007979)
 
-+ 下载  Additional Tools for Xcode（用的 Dictionary Development Kit）
++ 下载 Additional Tools for Xcode（用的 Dictionary Development Kit）
 
 把其放入自定义的一个目录中
 
@@ -61,7 +55,6 @@ isTop: false
 + 把编译好的词典文件放入系统词典目录中
 
 ![110811](https://image.yuhaowin.com/2021/04/16/110811.png)
-
 
 ![110933](https://image.yuhaowin.com/2021/04/16/110933.png)
 

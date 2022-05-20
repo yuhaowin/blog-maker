@@ -1,15 +1,9 @@
----
-title: 'Java Normal Thread & Daemon Thread'
-date: 2021-08-26 15:49:08
-tags: []
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2021/12/08/000031.png
-isTop: false
----
+# Java Normal Thread & Daemon Thread
+
+![](https://image.yuhaowin.com/2021/12/08/000031.png)
 
 > 有一天我日常启动我的项目后，我陷入了深深的沉思，我搞不清楚，为什么我的项目可以运行而没有终止。
-<!-- more -->
+
 
 程序的入口方法是一个 main 方法，我突然想到，这就是一个 main 方法，为什么当这个 main 方法执行完成后，程序没有退出？这和我无数次写的测试 demo 不一样。于是我决定搞清楚原委。
 
@@ -34,7 +28,6 @@ Thread#setDaemon 注释表明：
 当此刻运行的所有线程都是 daemon thread 的时候，jvm 会退出。daemon thread 可以在 jvm 退出的时候，自己结束自己。使用场景是：希望在 jvm 退出时，线程可以自动关闭。如：垃圾回收线程。
 
 ________
-
 
 + [参考资料一](https://www.cnblogs.com/quanxiaoha/p/10731361.html)
 
