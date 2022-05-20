@@ -1,12 +1,7 @@
----
-title: '英语发音技巧'
-date: 2022-01-26 15:25:55
-tags: [英语]
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2022/01/28/213021.jpg
-isTop: false
----
+# 英语发音技巧
+
+![](https://image.yuhaowin.com/2022/01/28/213021.jpg)
+
 ## 英语的连读现象
 
 > 英语和中文的一个很大区别是英语在句中有大量的连读现象，连读是造成听力不好和口语不地道的原因之一，连读有连音、加音、同化、异化等多种现象。
@@ -36,8 +31,6 @@ isTop: false
 
 + all over -- all over 连音
 
-
-
 ### 二、加音 - Intrusion
 
 在英语中，元音 + 元音，因为界限不明确，很容易糊在一起，很难发音，因此需要人工干预。
@@ -49,22 +42,20 @@ isTop: false
 加音的情况有：
 
 + 前一个单词以元音 /uː/、/ʊ/、/əʊ/、/aʊ/ 结尾的单词 + 单词(元音开头)时，会加一个 /w/ 过渡。
-  + just do it -- do 和 it 会加一个 /w/
-  + who is
-  + too often
+    + just do it -- do 和 it 会加一个 /w/
+    + who is
+    + too often
 + 前一个单词以元音 /iː/、/ɪ/、/eɪ/、/aɪ/、/ɔɪ/ 结尾的单词 + 单词(元音开头)时，会加一个 /j/ 过渡。
-  + I am
-  + she asked
+    + I am
+    + she asked
 + 前一个单词以元音 /ə/、/ɑː/、/ɔː/ 结尾的单词 + 单词(元音开头)时，会加一个 /r/ 过渡 - （英式）。
-  + the idea of -- idea 和 of 会加一个 /r/
-  + law and order -- law 和 and 
-  + china and india -- china 和 and
+    + the idea of -- idea 和 of 会加一个 /r/
+    + law and order -- law 和 and
+    + china and india -- china 和 and
 + 前一个单词以 r 结尾 + 单词(元音开头)时，会加一个 /r/ 过渡 - （英式）。
-  + bear it
-  + gear up
-  + far away
-
-
+    + bear it
+    + gear up
+    + far away
 
 ### 三、同化 - Assimilation
 
@@ -78,17 +69,13 @@ isTop: false
 
 如 look back、that job、good night 遇到辅音后，前面的 k t d 变弱了很多，而不是完全发出来。
 
-
-
 2、浊音变清音 - devoicing
 
 声带震动的浊音变成声带不振振动的清音
 
-have to  ->  have 中的 /v/ 变为 /f/，因为前一个浊音 + 后一个清音，声带要突然停止，不好发音，因此前一个浊音也改为清音
+have to ->  have 中的 /v/ 变为 /f/，因为前一个浊音 + 后一个清音，声带要突然停止，不好发音，因此前一个浊音也改为清音
 
 of course -> of 中的 /v/ 变为 /f/
-
-
 
 3、鼻化 - nasalization
 
@@ -98,8 +85,6 @@ in person -> /n/ 本来发音的时候不需要闭住上下嘴唇，但是受到
 
 impolite 、impatient，这里表示反义的词把 n -> m
 
-
-
 #### 顺行同化 - progressive assimilation
 
 > 后一个音受前面的音影响。
@@ -108,9 +93,7 @@ impolite 、impatient，这里表示反义的词把 n -> m
 
 books /bʊks/ 复数结尾读 /s/，/k/ 是声带不振动的清音，后面就发清音 /s/ 更容易，更轻松
 
-dogs  /dɒɡz/ 复数结尾读 /z/，/g/ 是声带振动的浊音，后面就发浊音 /z/
-
-
+dogs /dɒɡz/ 复数结尾读 /z/，/g/ 是声带振动的浊音，后面就发浊音 /z/
 
 #### 前后相互影响
 
@@ -134,8 +117,6 @@ Nice to meet you
 
 Did you do it？
 
-
-
 2、辅音延长 - gemination
 
 前一个音和后一音是同一个音，两个音会自然合并起来，只需要发一次
@@ -144,9 +125,7 @@ life force
 
 fish shop
 
-black coffee 
-
-
+black coffee
 
 ### 四、异化 -Dissimilation
 
@@ -170,7 +149,8 @@ fam**i**ly 中的 i 的音可以选择读，也可以选择不读
 
 有些词中的音是一定要省略的，这是历史省音，下列加粗字母不发音
 
-de**b**t、su**b**tle、**k**now、**k**nee、**w**rite、**w**rong、**w**rapper、chris**t**mas、san**d**wich、han**d**bag、hist**o**ry、fact**o**ry、math**e**matics
+de**b**t、su**b**tle、**k**now、**k**nee、**w**rite、**w**rong、**w**rapper、chris**t**mas、san**d**wich、han**d**bag、hist**o**
+ry、fact**o**ry、math**e**matics
 
 2、单词和单词之间的省音
 
@@ -200,19 +180,15 @@ next door、most common、must be、give me that、what‘s his name？
 
 默认发音
 
-to      /tuː/      -->    go to school     /tə/
+to /tuː/ -->    go to school /tə/
 
-at      /æt/     -->     look at me       /ət/
+at /æt/ -->     look at me /ət/
 
-but    /bʌt/    -->     sad but true     /bət/
+but /bʌt/ -->     sad but true /bət/
 
-can   /kæn/  -->     I can do it        /kən/
-
-
+can /kæn/ -->     I can do it /kən/
 
 这些词弱读是为了发音方便，说话更自然。
-
-
 
 一般常用的、少音节的虚词如：介词、代词、连词都会有弱读，它们不影响意思的主要意思，弱读时中间的元音一般都会变成中央元音，如下列这里：
 
@@ -226,11 +202,7 @@ can   /kæn/  -->     I can do it        /kən/
 
 助动词：am、are、have、has、do、does、would、can、could、should
 
-
-
 还有一些弱读的元音 /iː/ -> /ɪ/, 如：he、she、me
-
-
 
 ### 七、缩读 - Contraction
 
@@ -282,11 +254,7 @@ good bye = g'bye
 
 3、第三阶段：除阻 - 除去气流的阻碍
 
-
-
 当一个塞音后面紧跟另一个塞音时，第一个塞音的除阻阶段后，马上紧跟第二个塞音的成阻阶段，在快速的语流中有点不方便，因此，第一个音的除阻阶段不真正的释放气流，而只做一个动作，这种现象就是无声除阻、不完全爆破、失去爆破、失爆。
-
-
 
 塞音后面跟辅音时需要无声除阻
 

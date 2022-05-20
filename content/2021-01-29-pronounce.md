@@ -1,18 +1,12 @@
----
-title: '英语音标'
-date: 2021-01-29 13:50:33
-tags: [英语]
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2021/01/14/135120.jpg
-isTop: false
----
+# 英语音标
+
+![](https://image.yuhaowin.com/2021/01/14/135120.jpg)
+
 ## DJ 音标
 
 英语：辅音拼元音
 
 汉字：声母拼韵母
-
 
 
 汉语

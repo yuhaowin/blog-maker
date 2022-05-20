@@ -15,7 +15,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
           SOURCE: ../blog
-          REMOTE_HOST: www.yuhaowin.com
-          REMOTE_USER: root
-          TARGET: /root/app/nginx/html/
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ~/app/nginx/html/
           EXCLUDE:
