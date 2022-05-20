@@ -5,10 +5,10 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
-      - name: make cider executable
-        run: chmod +x ./cider
-      - name: run cider to generate server site
-        run: ./cider -o ../blog
+      - name: make blog-maker executable
+        run: chmod +x ./blog-maker
+      - name: run blog-maker to generate server site
+        run: ./blog-maker -o ../blog
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
