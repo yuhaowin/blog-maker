@@ -22,10 +22,10 @@ jobs:
             - name: run cider to generate the entire site
               run: ./cider -o ../public
 
-            - name: sync resouce
+            - name: sync resource
               run: rsync -avr --progress ./rs/images ../public/ --delete
 
             - name: set git commit name and email
-              run: git config --global user.name actionBot && git config --global user.email actionbot@github.com
+              run: git config --global user.name action-bot && git config --global user.email actionbot@github.com
             - name: Deploy
-              run: cd ../public && git add . && git commit -m 'update' && git push origin master
+              run: cd ../public && git add . && git commit -m 'update' && git push origin main
