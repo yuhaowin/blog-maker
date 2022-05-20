@@ -1,13 +1,6 @@
----
-title: '算法｜时间轮'
-date: 2020-04-30 11:41:21
-tags: []
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2020/05/30/210144.jpg
-isTop: false
----
+# 算法｜时间轮
 
+![](https://image.yuhaowin.com/2020/05/30/210144.jpg)
 
 https://crossoverjie.top/2019/09/27/algorithm/time%20wheel/
 
