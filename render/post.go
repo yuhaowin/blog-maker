@@ -19,11 +19,11 @@ import (
 	"time"
 )
 
-var(
+var (
 	markdown goldmark.Markdown
 )
 
-func init(){
+func init() {
 	markdown = goldmark.New(
 		goldmark.WithExtensions(extension.GFM),
 		goldmark.WithExtensions(
@@ -39,8 +39,8 @@ func init(){
 	)
 }
 
-type Post struct{
-	Title string
+type Post struct {
+	Title   string
 	Content string
 }
 
@@ -49,30 +49,30 @@ func GeneratePost(tmpl *template.Template, mdPath, outputPath string) error {
 		//make the dir first
 		parentDir := filepath.Dir(outputPath)
 		err = os.MkdirAll(parentDir, 0766)
-		if err != nil{
+		if err != nil {
 			log.Fatal(err.Error())
 		}
 	}
 
 	outFile, err := os.OpenFile(outputPath, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0766)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	return GeneratePostOut(tmpl, mdPath, outFile)
 }
 
-func GeneratePostOut(tmpl *template.Template, mdPath string, writer io.Writer)error{
+func GeneratePostOut(tmpl *template.Template, mdPath string, writer io.Writer) error {
 	mdFile, err := ioutil.ReadFile(mdPath)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	title, err := GetTitleFromPostMD(mdPath)
-	if err != nil{
+	if err != nil {
 		return nil
 	}
 
 	var buf bytes.Buffer
-	if err = markdown.Convert(mdFile, &buf); err != nil{
+	if err = markdown.Convert(mdFile, &buf); err != nil {
 		return err
 	}
 	var p Post
@@ -81,61 +81,60 @@ func GeneratePostOut(tmpl *template.Template, mdPath string, writer io.Writer)er
 	return tmpl.Execute(writer, &p)
 }
 
-func GetTitleFromPostMD(mdpath string)(string, error){
+func GetTitleFromPostMD(mdpath string) (string, error) {
 	file, err := os.Open(mdpath)
-	if err != nil{
+	if err != nil {
 		return "", err
 	}
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
-	for scanner.Scan(){
+	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		if len(line) > 0 && line[0] == '#'{
+		if len(line) > 0 && line[0] == '#' {
 			line = strings.Trim(line, "#")
 			return strings.TrimSpace(line), nil
 		}
 	}
-	fmt.Printf("Warning!!! File %s has no title, please add title first.\n", mdpath);
+	fmt.Printf("Warning!!! File %s has no title, please add title first.\n", mdpath)
 
 	return "No Title", nil
 }
 
-type PostTitleList struct{
-	Title string
-	Link string
-	CreateDate time.Time
+type PostTitleList struct {
+	Title         string
+	Link          string
+	CreateDate    time.Time
 	CreateDateStr string
 }
 
 type ByDate []PostTitleList
 
-func (a ByDate) Len() int           { return len(a) }
-func (a ByDate) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByDate) Len() int      { return len(a) }
+func (a ByDate) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
 func (a ByDate) Less(i, j int) bool {
-	if a[i].CreateDateStr == a[j].CreateDateStr{
+	if a[i].CreateDateStr == a[j].CreateDateStr {
 		return strings.Compare(a[i].Title, a[j].Title) == 1
 	}
 	return a[i].CreateDateStr > a[j].CreateDateStr
 }
 
-
-func GenerateList(tmpl *template.Template, contentList RenderList, outputFile string)error{
+func GenerateList(tmpl *template.Template, contentList RenderList, outputFile string) error {
 	outFile, err := os.OpenFile(outputFile, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0766)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	return GenerateListOut(tmpl, contentList, outFile)
 }
 
-func GenerateListOut(tmpl *template.Template, contentList RenderList, output io.Writer)error{
+func GenerateListOut(tmpl *template.Template, contentList RenderList, output io.Writer) error {
 	var l ByDate
-	for _, content := range contentList{
-		if content.IsContent(){
+	for _, content := range contentList {
+		if content.IsContent() {
 			l = append(l, PostTitleList{
-				Title:     content.Title,
-				CreateDate: content.CreateDate,
+				Title:         content.Title,
+				CreateDate:    content.CreateDate,
 				CreateDateStr: content.CreateDate.Format("2006-01-02"),
-				Link:  content.IndexKey,
+				Link:          content.IndexKey,
 			})
 		}
 	}
@@ -143,15 +142,15 @@ func GenerateListOut(tmpl *template.Template, contentList RenderList, output io.
 	return tmpl.Execute(output, &l)
 }
 
-func GenerateListWithPath(tmpl *template.Template, contentList RenderList, path string, output io.Writer)error{
+func GenerateListWithPath(tmpl *template.Template, contentList RenderList, path string, output io.Writer) error {
 	var l ByDate
-	for _, content := range contentList{
-		if content.IsContent() && strings.Index(content.IndexKey, path) == 0{
+	for _, content := range contentList {
+		if content.IsContent() && strings.Index(content.IndexKey, path) == 0 {
 			l = append(l, PostTitleList{
-				Title:     content.Title,
-				CreateDate: content.CreateDate,
+				Title:         content.Title,
+				CreateDate:    content.CreateDate,
 				CreateDateStr: content.CreateDate.Format("2006-01-02"),
-				Link:  content.IndexKey,
+				Link:          content.IndexKey,
 			})
 		}
 	}
@@ -159,14 +158,14 @@ func GenerateListWithPath(tmpl *template.Template, contentList RenderList, path 
 	return tmpl.Execute(output, &l)
 }
 
-func GetTemplate(tmplPath, tmplFile string)*template.Template{
-	templ, err:= template.ParseFiles(filepath.Join(tmplPath, tmplFile))
-	if err != nil{
+func GetTemplate(tmplPath, tmplFile string) *template.Template {
+	templ, err := template.ParseFiles(filepath.Join(tmplPath, tmplFile))
+	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
 	templ, err = templ.ParseGlob(filepath.Join(tmplPath, "partials", "*"))
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 		return nil
 	}

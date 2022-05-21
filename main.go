@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/leyafo/cider/render"
+	"github.com/yuhaowin/blog-maker/render"
 	"io"
 	"log"
 	"net/http"
@@ -13,7 +13,7 @@ import (
 	"text/template"
 )
 
-var(
+var (
 	outputFolder  = flag.String("o", "public", "")
 	contentFolder = "content"
 	templatePath  = "templates"
@@ -24,42 +24,41 @@ var(
 	addr          = ":8080"
 )
 
-func cwdPath(subPath ...string)string{
+func cwdPath(subPath ...string) string {
 	// using the function
 	workDir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
-	for _, p := range subPath{
+	for _, p := range subPath {
 		workDir = filepath.Join(workDir, p)
 	}
 	return workDir
 }
 
-
-func printHelp(){
-	fmt.Println("./cider -o path\n", "render all MD files(in content folder) to path, default is ./public" )
-	fmt.Println("./cider s \n", "render all MD files and then start a HTTP server to exhibit your github pages")
-	fmt.Println("./cider d \n", "start a HTTP server and render contents in draft folder." )
+func printHelp() {
+	fmt.Println("./blog-maker -o path \n", "render all MD files(in content folder) to path, default is ./public")
+	fmt.Println("./blog-maker s \n", "render all MD files and then start a HTTP server to exhibit your github pages")
+	fmt.Println("./blog-maker d \n", "start a HTTP server and render contents in draft folder.")
 }
 
-func main(){
+func main() {
 	log.SetFlags(log.Lshortfile)
 
-	if len(os.Args) == 2{
+	if len(os.Args) == 2 {
 		s := viewingServer{}
 		s.PostList = make(render.RenderList)
-		s.PostTemplate = render.GetTemplate(cwdPath(templatePath),postTemplate)
-		s.IndexTemplate = render.GetTemplate(cwdPath(templatePath),indexTemplate)
+		s.PostTemplate = render.GetTemplate(cwdPath(templatePath), postTemplate)
+		s.IndexTemplate = render.GetTemplate(cwdPath(templatePath), indexTemplate)
 		switch os.Args[1] {
 		case "s":
-			s.ContentDir=cwdPath(contentFolder)
+			s.ContentDir = cwdPath(contentFolder)
 			s.PostList.UpdateRenderList(s.ContentDir)
 			log.Println("Starting HTTP file server at http://localhost:8080/")
 			log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer)))
 			return
 		case "d":
-			s.ContentDir=cwdPath(draftFolder)
+			s.ContentDir = cwdPath(draftFolder)
 			s.PostList.UpdateRenderList(s.ContentDir)
 			log.Println("Starting HTTP file server at http://localhost:8080/")
 			log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer)))
@@ -77,36 +76,36 @@ func main(){
 }
 
 type viewingServer struct {
-	ContentDir string
+	ContentDir    string
 	PostList      render.RenderList
-	PostTemplate  *template.Template;
+	PostTemplate  *template.Template
 	IndexTemplate *template.Template
 }
 
-func (s *viewingServer) viewingServer(w http.ResponseWriter, r *http.Request)  {
+func (s *viewingServer) viewingServer(w http.ResponseWriter, r *http.Request) {
 	var err error
 	p := strings.TrimSpace(r.URL.Path)
-	if p[len(p)-1] == '/'{
+	if p[len(p)-1] == '/' {
 		err = render.GenerateListWithPath(s.IndexTemplate, s.PostList, p, w)
-	}else if strings.Index(p, "/rs/images") == 0{
+	} else if strings.Index(p, "/rs/images") == 0 {
 		f, err := os.Open(cwdPath(p))
-		if err != nil{
+		if err != nil {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 		io.Copy(w, f)
-	}else{
-		if p, ok := s.PostList[p]; ok{
+	} else {
+		if p, ok := s.PostList[p]; ok {
 			err = render.GeneratePostOut(s.PostTemplate, p.GetMDPath(s.ContentDir), w)
-		}else{
+		} else {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 	}
-	if err != nil{
+	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
-	}else{
+	} else {
 		w.WriteHeader(http.StatusOK)
 	}
 }

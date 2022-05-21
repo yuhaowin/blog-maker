@@ -9,71 +9,72 @@ import (
 	"time"
 )
 
-type ContentInfo struct{
-	Title string
-	Ext string
-	IndexKey string
+type ContentInfo struct {
+	Title      string
+	Ext        string
+	IndexKey   string
 	ModifyTime time.Time
 	CreateDate time.Time
 	NeedRender bool
 }
 
-func (c ContentInfo)IsContent()bool{
+func (c ContentInfo) IsContent() bool {
 	return c.Ext == ".md"
 }
 
-func (c ContentInfo)GetMDPath(rootPath string)string{
+func (c ContentInfo) GetMDPath(rootPath string) string {
 	return filepath.Join(rootPath, c.IndexKey+c.Ext)
 }
 
-func (c ContentInfo)GetMDOutPath(rootPath string)string {
-	return  filepath.Join(rootPath, c.IndexKey, "index.html")
+func (c ContentInfo) GetMDOutPath(rootPath string) string {
+	return filepath.Join(rootPath, c.IndexKey, "index.html")
 }
 
 type RenderList map[string]*ContentInfo
-func readContentInfo(r RenderList, path string)(error){
+
+func readContentInfo(r RenderList, path string) error {
 	log.Println("Get all post update time from:", path)
 	file, err := os.Open(path)
-	if err != nil{
-		return  err
+	if err != nil {
+		return err
 	}
 	defer file.Close()
 	return gob.NewDecoder(file).Decode(&r)
 }
 
-func storeContentInfo(r RenderList, path string)error{
+func storeContentInfo(r RenderList, path string) error {
 	log.Println("Save all post update time into:", path)
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0744)
-	if err != nil{
-		panic("open file error: "+err.Error())
+	if err != nil {
+		panic("open file error: " + err.Error())
 		return err
 	}
 	defer file.Close()
 	err = gob.NewEncoder(file).Encode(r)
-	if err != nil{
-		panic("open file error: "+err.Error())
+	if err != nil {
+		panic("open file error: " + err.Error())
 		return err
 	}
-	return  nil
+	return nil
 }
 
-func (r RenderList)GetTemplateModifyTimes(templatePath string)bool{
+func (r RenderList) GetTemplateModifyTimes(templatePath string) bool {
 	needRenderALL := false
 	filepath.Walk(templatePath, func(path string, fileInfo os.FileInfo, err error) error {
-		if fileInfo.IsDir(){
+		if fileInfo.IsDir() {
 			return nil
 		}
 		splits := strings.Split(path, templatePath)
 		relativePath := splits[1]
 		_, ok := r[relativePath]
-		if !ok{
+		if !ok {
 			r[relativePath] = &ContentInfo{
 				IndexKey:   relativePath,
 				ModifyTime: fileInfo.ModTime(),
 			}
 			needRenderALL = true
 			return nil
-		}else if !r[relativePath].ModifyTime.Equal(fileInfo.ModTime()){
+		} else if !r[relativePath].ModifyTime.Equal(fileInfo.ModTime()) {
 			r[relativePath].ModifyTime = fileInfo.ModTime()
 			needRenderALL = true
 			return nil
@@ -84,15 +85,14 @@ func (r RenderList)GetTemplateModifyTimes(templatePath string)bool{
 	return needRenderALL
 }
 
-
-func (r RenderList) UpdateRenderList(contentPath string){
+func (r RenderList) UpdateRenderList(contentPath string) {
 	filepath.Walk(contentPath, func(path string, fileInfo os.FileInfo, err error) error {
-		if fileInfo.IsDir(){
+		if fileInfo.IsDir() {
 			return nil
 		}
 
 		splitIndex := strings.Index(path, contentPath)
-		if(splitIndex == -1){
+		if splitIndex == -1 {
 			log.Fatalf("split path error, content path=%s%t origin path=%s\n", contentPath, path)
 			return nil
 		}
@@ -101,9 +101,9 @@ func (r RenderList) UpdateRenderList(contentPath string){
 		//remove the ext for key
 		relativePath = relativePath[:len(relativePath)-len(fileExt)]
 
-		if contentInfo, ok := r[relativePath]; ok{
+		if contentInfo, ok := r[relativePath]; ok {
 			// do not need render
-			if contentInfo.ModifyTime.Equal(fileInfo.ModTime()){
+			if contentInfo.ModifyTime.Equal(fileInfo.ModTime()) {
 				return nil
 			}
 		}
@@ -135,10 +135,10 @@ func (r RenderList) UpdateRenderList(contentPath string){
 	})
 }
 
-func (c RenderList)GetRemovedContentInfo(contentDir string)[]*ContentInfo{
+func (c RenderList) GetRemovedContentInfo(contentDir string) []*ContentInfo {
 	var result []*ContentInfo
-	for key, info := range c{
-		if !info.IsContent(){
+	for key, info := range c {
+		if !info.IsContent() {
 			continue
 		}
 		if _, err := os.Stat(info.GetMDPath(contentDir)); os.IsNotExist(err) {
@@ -148,4 +148,3 @@ func (c RenderList)GetRemovedContentInfo(contentDir string)[]*ContentInfo{
 	}
 	return result
 }
-
