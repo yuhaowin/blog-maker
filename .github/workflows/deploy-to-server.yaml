@@ -1,4 +1,4 @@
-name: push-to-server
+name: deploy-to-server
 on: [ push ]
 jobs:
   check-bats-version:
@@ -9,13 +9,12 @@ jobs:
         run: chmod +x ./blog-maker
       - name: run blog-maker to generate server site
         run: ./blog-maker -o ../blog
-      - name: Deploy to Server
+      - name: deploy to server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltDvP --chmod=Dugo=rx,Fugo=r --delete"
           SOURCE: ../blog
+          TARGET: ~/app/nginx/html/
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ~/app/nginx/html/
-          EXCLUDE:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
