@@ -13,34 +13,23 @@ import (
 	"text/template"
 )
 
+type viewingServer struct {
+	ContentDir    string
+	PostList      render.RenderList
+	PostTemplate  *template.Template
+	IndexTemplate *template.Template
+}
+
 var (
-	outputFolder  = flag.String("o", "public", "")
-	contentFolder = "content"
-	templatePath  = "templates"
+	addr          = ":8080"
 	metaPath      = ".meta"
 	draftFolder   = "draft"
-	indexTemplate = "index.html.tpl"
+	templatePath  = "templates"
 	postTemplate  = "post.html.tpl"
-	addr          = ":8080"
+	contentFolder = "content"
+	indexTemplate = "index.html.tpl"
+	outputFolder  = flag.String("o", "public", "")
 )
-
-func cwdPath(subPath ...string) string {
-	// using the function
-	workDir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, p := range subPath {
-		workDir = filepath.Join(workDir, p)
-	}
-	return workDir
-}
-
-func printHelp() {
-	fmt.Println("./blog-maker -o path \n", "render all MD files(in content folder) to path, default is ./public")
-	fmt.Println("./blog-maker s \n", "render all MD files and then start a HTTP server to exhibit your github pages")
-	fmt.Println("./blog-maker d \n", "start a HTTP server and render contents in draft folder.")
-}
 
 func main() {
 	log.SetFlags(log.Lshortfile)
@@ -54,20 +43,21 @@ func main() {
 		case "s":
 			s.ContentDir = cwdPath(contentFolder)
 			s.PostList.UpdateRenderList(s.ContentDir)
-			log.Println("Starting HTTP file server at http://localhost:8080/")
+			log.Println("Starting HTTP server at http://localhost:8080/")
 			log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer)))
 			return
 		case "d":
 			s.ContentDir = cwdPath(draftFolder)
 			s.PostList.UpdateRenderList(s.ContentDir)
-			log.Println("Starting HTTP file server at http://localhost:8080/")
+			log.Println("Starting HTTP server at http://localhost:8080/")
 			log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer)))
 			return
 		case "h":
 			printHelp()
 			return
 		default:
-			break
+			printHelp()
+			return
 		}
 	}
 	flag.Parse()
@@ -75,19 +65,12 @@ func main() {
 	render.Render(cwdPath(templatePath), cwdPath(contentFolder), filepath.Join(outputPath, metaPath), outputPath)
 }
 
-type viewingServer struct {
-	ContentDir    string
-	PostList      render.RenderList
-	PostTemplate  *template.Template
-	IndexTemplate *template.Template
-}
-
 func (s *viewingServer) viewingServer(w http.ResponseWriter, r *http.Request) {
 	var err error
 	p := strings.TrimSpace(r.URL.Path)
 	if p[len(p)-1] == '/' {
 		err = render.GenerateListWithPath(s.IndexTemplate, s.PostList, p, w)
-	} else if strings.Index(p, "/rs/images") == 0 {
+	} else if strings.Index(p, "/resource/images") == 0 {
 		f, err := os.Open(cwdPath(p))
 		if err != nil {
 			w.WriteHeader(http.StatusNotFound)
@@ -108,4 +91,22 @@ func (s *viewingServer) viewingServer(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(http.StatusOK)
 	}
+}
+
+func cwdPath(subPath ...string) string {
+	// using the function
+	workDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, p := range subPath {
+		workDir = filepath.Join(workDir, p)
+	}
+	return workDir
+}
+
+func printHelp() {
+	fmt.Println("./blog-maker d \n", "\trender all markdown files (in draft folder) and then start a HTTP server")
+	fmt.Println("./blog-maker s \n", "\trender all markdown files and then start a HTTP server to exhibit your blog")
+	fmt.Println("./blog-maker -o path \n", "\trender all markdown files (in content folder) to path, default path is ./public")
 }
