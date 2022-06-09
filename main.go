@@ -23,7 +23,6 @@ type viewingServer struct {
 var (
 	addr          = ":8080"
 	metaPath      = ".meta"
-	draftFolder   = "draft"
 	templatePath  = "templates"
 	postTemplate  = "post.html.tpl"
 	contentFolder = "content"
@@ -42,12 +41,6 @@ func main() {
 		switch os.Args[1] {
 		case "s":
 			s.ContentDir = cwdPath(contentFolder)
-			s.PostList.UpdateRenderList(s.ContentDir)
-			log.Println("Starting HTTP server at http://localhost:8080/")
-			log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer)))
-			return
-		case "d":
-			s.ContentDir = cwdPath(draftFolder)
 			s.PostList.UpdateRenderList(s.ContentDir)
 			log.Println("Starting HTTP server at http://localhost:8080/")
 			log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer)))
@@ -106,7 +99,6 @@ func cwdPath(subPath ...string) string {
 }
 
 func printHelp() {
-	fmt.Println("./blog-maker d \n", "\trender all markdown files (in draft folder) and then start a HTTP server")
-	fmt.Println("./blog-maker s \n", "\trender all markdown files and then start a HTTP server to exhibit your blog")
-	fmt.Println("./blog-maker -o path \n", "\trender all markdown files (in content folder) to path, default path is ./public")
+	fmt.Println("./blog-maker s \n", "\trender all markdown files and then start a HTTP server to exhibit your website")
+	fmt.Println("./blog-maker -o path \n", "\trender all markdown files in content folder to path, default path is ./public")
 }
