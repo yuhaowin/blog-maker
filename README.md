@@ -1,23 +1,31 @@
-
 ## Install
-Compiling from source code:  
+
+Compiling and building binary executable file from source code:
+
 ```bash
 go build -o blog-maker main.go
 ```
 
-### Showing your site on local
+### Showing your website on local
+
 ```bash
 ./blog-maker s
 ```
 
 ### Classify your articles
-If you want to classify your articles into different groups, you should create a subfolder into `content`, and then add the folder link into `templates/partials/_nav.html.tpl`. For example, if you have written an article about English learning, and want to create a English Learning group in your website.
+
+If you want to classify your articles into different groups, you should create a subfolder into `content`, and then add
+the folder link into `templates/partials/_nav.html.tpl`. 
+
+For example, if you have written an article about `videos`, and want to create a `videos` group in your website.
+
 ```bash
-mkdir content/el
-mv your_md_file content/el/
+mkdir content/videos
+mv your_md_file content/videos/
 ```
 
-Add `el` into `templates/partials/_nav.html.tpl`
+Add `videos` into `templates/partials/_nav.html.tpl`
+
 ```html
-[ <a class="nav-btn" href="/el/">English</a> ]
+[ <a class="nav-btn" href="/videos/">videos</a> ]
 ```
