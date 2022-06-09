@@ -1,14 +1,6 @@
----
-title: '设计模式'
-date: 2020-04-05 21:56:17
-tags: []
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2020/04/05/231158.jpg
-isTop: false
----
-掌握 | 这一次，让我们一起来搞懂设计模式
-<!-- more -->
+# 常用的设计模式
+
+https://image.yuhaowin.com/2020/04/05/231158.jpg
 
 ## 一、设计原则
 
@@ -16,7 +8,7 @@ isTop: false
 
 ### 依赖倒置原则
 
->+ 高层模块不应该依赖低层模块，两者都应该依赖抽象
+> + 高层模块不应该依赖低层模块，两者都应该依赖抽象
 >+ 抽象不应该依赖细节
 >+ 细节应该依赖抽象
 
@@ -47,7 +39,7 @@ isTop: false
 
 **产品族和产品等级的概念**
 
-+ **产品族:一个家电公司生产的多个家电(如:格力空调,格力冰箱,格力手机)是一个产品族；** 
++ **产品族:一个家电公司生产的多个家电(如:格力空调,格力冰箱,格力手机)是一个产品族；**
 + **产品等级:格力手机，苹果手机，小米手机，他们是一个产品等级。**
 
 假设有如下的背景：
@@ -108,6 +100,7 @@ public class JavaVideoFactory extends VideoFactory {
  */
 public class Test {
     private static final Logger logger = LoggerFactory.getLogger(Test.class);
+
     public static void main(String[] args) {
         VideoFactory videoFactory = new PythonVideoFactory();
         Video video = videoFactory.getVideo();
@@ -128,8 +121,9 @@ public class Test {
 ### 代理模式
 
 > 代理模式：为其他对象提供一种代理,以控制对这个对象的访问;
-> 代理对象在客户端和目标对象之间起到中介作用，如此便于在目标实现的基础上增加额外的功能操作，前拦截，后拦截等，以满足自身的业务需求;代理模式分为静态代理和动态代理，其中动态代理又分为jdk动态代理（基于反射实现的）和cglib `Code Generation Library` （基于asm字节码实现的）。
-
+>
+代理对象在客户端和目标对象之间起到中介作用，如此便于在目标实现的基础上增加额外的功能操作，前拦截，后拦截等，以满足自身的业务需求;代理模式分为静态代理和动态代理，其中动态代理又分为jdk动态代理（基于反射实现的）和cglib `Code Generation Library`
+（基于asm字节码实现的）。
 
 #### 1. 静态代理 - JAVA
 
@@ -193,8 +187,9 @@ public interface OrderService {
 Service 层接口实现
 
 ```java
-public class OrderSercviceImpl implements OrderService{
-    private  OrderDao orderDao;
+public class OrderSercviceImpl implements OrderService {
+    private OrderDao orderDao;
+
     @Override
     public int saveOrder(Order order) {
         iOrderDao = new OrderDaoImpl();
@@ -216,10 +211,10 @@ public class OrderServiceStaticProxy {
      */
     private OrderService orderService;
 
-	/**
-	* 当客户端调用该方法时，会在目标类的orderService.saveOrder(order)方法
-	* 前后执行beforeMethod(order)和afterMethod()方法，来增强目标对象的saveOrder(order)方法
-	*/
+    /**
+     * 当客户端调用该方法时，会在目标类的orderService.saveOrder(order)方法
+     * 前后执行beforeMethod(order)和afterMethod()方法，来增强目标对象的saveOrder(order)方法
+     */
     public int saveOrder(Order order) {
         beforeMethod(order);
         orderService = new OrderSercviceImpl();
@@ -228,16 +223,16 @@ public class OrderServiceStaticProxy {
         return result;
     }
 
-    private void beforeMethod(Order order){
+    private void beforeMethod(Order order) {
         System.out.println("静态代理before code");
         Integer userId = order.getUserId();
         Integer dbRouter = userId % 2;
-        System.out.println("静态代理分配到 [db"+dbRouter+"] 处理数据");
+        System.out.println("静态代理分配到 [db" + dbRouter + "] 处理数据");
         //设置dataSource（这一步不是代理模式的重点，可以忽略）
-        DataSourceContextHolder.setDBType("db"+dbRouter);
+        DataSourceContextHolder.setDBType("db" + dbRouter);
     }
 
-    private void afterMethod(){
+    private void afterMethod() {
         System.out.println("静态代理after code");
     }
 }
@@ -261,7 +256,6 @@ public class Test {
 测试结果如下：
 
 ![测试结果](https://ws2.sinaimg.cn/large/006tKfTcgy1g0botsvjx0j30qc0asdhq.jpg)
-
 
 #### 2. 基于 JDK 实现的动态代理 - JAVA
 
@@ -297,8 +291,6 @@ public class OrderServiceDynamicProxy implements InvocationHandler {
      * @param proxy  代理类 一般自己实现invoke方法是很少使用该参数
      * @param method 要被增强的目标对象的方法对象
      * @param args   具体的method的参数
-     * @return
-     * @throws Throwable
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -347,7 +339,8 @@ public class Test {
 
 ![](https://ws3.sinaimg.cn/large/006tKfTcgy1g0c3d3ilxhj30ma0aomyx.jpg)
 
-在测试类中通过 OrderServiceDynamicProxy 类的 bind() 钩子方法 返回通过反射生成的代理类的对象，动态生成的代理类是以class文件(Proxy0.class)的形式存在，通过对该class文件进行持久化，和通过jad反编译成java文件如下：
+在测试类中通过 OrderServiceDynamicProxy 类的 bind() 钩子方法 返回通过反射生成的代理类的对象，动态生成的代理类是以class文件(Proxy0.class)
+的形式存在，通过对该class文件进行持久化，和通过jad反编译成java文件如下：
 
 ```java
 public final class $Proxy0 extends Proxy implements OrderService {
@@ -424,27 +417,28 @@ public final class $Proxy0 extends Proxy implements OrderService {
 
 所以该类可以强转为OrderService
 
-```java
-OrderService dynamicProxy = (OrderService) new OrderServiceDynamicProxy(new OrderSercviceImpl()).bind();
+```
+    OrderService dynamicProxy=(OrderService)new OrderServiceDynamicProxy(new OrderSercviceImpl()).bind();
 ```
 
 由于实现了OrderService接口，所以在该类中重写了OrderService 的saveOrder()方法
 
-```java
-    public final int saveOrder(Order order) {
-        try {
-            return ((Integer) super.h.invoke(this, m3, new Object[]{
-                    order
-            })).intValue();
-        } catch (Error _ex) {
-        } catch (Throwable throwable) {
-            throw new UndeclaredThrowableException(throwable);
+```
+    public final int saveOrder(Order order){
+        try{
+        return((Integer)super.h.invoke(this,m3,new Object[]{
+        order
+        })).intValue();
+        }catch(Error _ex){
+        }catch(Throwable throwable){
+        throw new UndeclaredThrowableException(throwable);
         }
-    }
+        }
 ```
 
 由于继承了Proxy，所以可以调用父类的 h 参数 即：invocationhandler 参数，这个参数是在bind()这个方法中通过
- Proxy.newProxyInstance(cls.getClassLoader(), cls.getInterfaces(), this) 传入，这里的this 表示的是 OrderServiceDynamicProxy 但是 OrderServiceDynamicProxy这个类实现了Invocationhandler 所以this就是invocationhandler
+Proxy.newProxyInstance(cls.getClassLoader(), cls.getInterfaces(), this) 传入，这里的this 表示的是 OrderServiceDynamicProxy 但是
+OrderServiceDynamicProxy这个类实现了Invocationhandler 所以this就是invocationhandler
 
 所以在代理类的saveOrder方法中调用的super.h.invoke() 就是调用OrderServiceDynamicProxy类的重写的invoke();
 
@@ -453,7 +447,6 @@ OrderService dynamicProxy = (OrderService) new OrderServiceDynamicProxy(new Orde
 #### 3. 基于 cglib 实现的动态代理 - JAVA
 
 ?> 待更新。。。
-
 
 ## 三、行为型
 
@@ -481,29 +474,29 @@ OrderService dynamicProxy = (OrderService) new OrderServiceDynamicProxy(new Orde
 ```java
 public abstract class ACourse {
     //该方法是算法的骨架,使用final修饰是不希望子类破坏算法的结构;
-    protected final void makeCourse(){
+    protected final void makeCourse() {
         this.makePPT();
         this.makeVideo();
-        if (needWriteArticle()){
+        if (needWriteArticle()) {
             this.writeArticle();
         }
         this.packageCourse();
     }
 
-    final void makePPT(){
+    final void makePPT() {
         System.out.println("制作ppt");
     }
 
-    final void makeVideo(){
+    final void makeVideo() {
         System.out.println("制作视频");
     }
 
-    final void writeArticle(){
+    final void writeArticle() {
         System.out.println("编写手记");
     }
 
     //钩子方法,并提供了一个默认的实现,不使用final修饰,子类可以根据需要重新该方法
-    protected Boolean needWriteArticle(){
+    protected Boolean needWriteArticle() {
         return false;
     }
 
@@ -511,7 +504,6 @@ public abstract class ACourse {
     abstract void packageCourse();
 }
 ```
-
 
 以下是两个子类
 
@@ -521,6 +513,7 @@ public class DesignPatternCourse extends ACourse {
     void packageCourse() {
         System.out.println("提供java课程源代码");
     }
+
     //该课程需要提供手记,但是ACourse中默认是不提供手记,需要重写该钩子方法
     @Override
     protected Boolean needWriteArticle() {
@@ -529,18 +522,20 @@ public class DesignPatternCourse extends ACourse {
 }
 ```
 
-
 ```java
 public class FECourse extends ACourse {
     private Boolean needWriteArticleFlag = false;
+
     @Override
     void packageCourse() {
         System.out.println("提供前端课程源代码");
         System.out.println("提供前端课程多媒体素材");
     }
+
     public void setNeedWriteArticleFlag(Boolean needWriteArticleFlag) {
         this.needWriteArticleFlag = needWriteArticleFlag;
     }
+
     //由于前端课程的不同,有的需要提供手记有的不需要提供,所以将是否提供的权限开放给客户端
     @Override
     protected Boolean needWriteArticle() {
@@ -572,7 +567,7 @@ public class Test {
 
 ### 策略模式
 
->定义算法家族，分别封装起来，让它们之间可以相互替换，客户端动态的选择某种算法。此模式让算法的变化不会影响使用算法的用户。
+> 定义算法家族，分别封装起来，让它们之间可以相互替换，客户端动态的选择某种算法。此模式让算法的变化不会影响使用算法的用户。
 
 应用场景：下单时，满减、立减，优惠券等使用不同的策略。可以优雅的处理掉 if...else...
 
@@ -602,27 +597,29 @@ public interface UserPayService {
 public class ParticularlyVipPayService implements UserPayService {
     @Override
     public BigDecimal quote(BigDecimal orderPrice) {
-         if (消费金额大于30元) {
-            return 7折价格;
+        if (消费金额大于30元) {
+            return 7 折价格;
         }
     }
 }
+
 //超级会员
 public class SuperVipPayService implements UserPayService {
     @Override
     public BigDecimal quote(BigDecimal orderPrice) {
-        return 8折价格;
+        return 8 折价格;
     }
 }
+
 //普通会员
 public class VipPayService implements UserPayService {
     @Override
     public BigDecimal quote(BigDecimal orderPrice) {
-        if(该用户超级会员刚过期并且尚未使用过临时折扣){
+        if (该用户超级会员刚过期并且尚未使用过临时折扣) {
             临时折扣使用次数更新();
-            returen 8折价格;
+            returen 8 折价格;
         }
-        return 9折价格;
+        return 9 折价格;
     }
 }
 ```
@@ -630,40 +627,42 @@ public class VipPayService implements UserPayService {
 客户端类：
 
 ```java
-public BigDecimal calPrice(BigDecimal orderPrice,User user) {
+public BigDecimal calPrice(BigDecimal orderPrice,User user){
 
-     String vipType = user.getVipType();
+        String vipType=user.getVipType();
 
-     if (vipType == 专属会员) {
-        UserPayService strategy = new ParticularlyVipPayService();
+        if(vipType==专属会员){
+        UserPayService strategy=new ParticularlyVipPayService();
         return strategy.quote(orderPrice);
-     }
-     if (vipType == 超级会员) {
-        UserPayService strategy = new SuperVipPayService();
+        }
+        if(vipType==超级会员){
+        UserPayService strategy=new SuperVipPayService();
         return strategy.quote(orderPrice);
-     }
-     if (vipType == 普通会员) {
-        UserPayService strategy = new VipPayService();
+        }
+        if(vipType==普通会员){
+        UserPayService strategy=new VipPayService();
         return strategy.quote(orderPrice);
-     }
-     return 原价;
-}
+        }
+        return 原价;
+        }
 ```
 
 由上述代码可知，在客户端必须判断并选择需要的策略类，并没有完全消灭 if else，这一点可以通过引入工厂模式解决
 
 ```java
 public class UserPayServiceStrategyFactory {
-	 // 保存所有的策略
-    private static Map<String,UserPayService> services = new ConcurrentHashMap<String,UserPayService>();
-	 // 获取指导类型的策略
-    public  static UserPayService getByUserType(String type){
+    // 保存所有的策略
+    private static Map<String, UserPayService> services = new ConcurrentHashMap<String, UserPayService>();
+
+    // 获取指导类型的策略
+    public static UserPayService getByUserType(String type) {
         return services.get(type);
     }
-	 // 注册策略
-    public static void register(String userType,UserPayService userPayService){
-        Assert.notNull(userType,"userType can't be null");
-        services.put(userType,userPayService);
+
+    // 注册策略
+    public static void register(String userType, UserPayService userPayService) {
+        Assert.notNull(userType, "userType can't be null");
+        services.put(userType, userPayService);
     }
 }
 ```
@@ -671,13 +670,12 @@ public class UserPayServiceStrategyFactory {
 此时客户端代码可以改为：
 
 ```java
-public BigDecimal calPrice(BigDecimal orderPrice,User user) {
-     String vipType = user.getVipType();
-     UserPayService strategy = UserPayServiceStrategyFactory.getByUserType(vipType);
-     return strategy.quote(orderPrice);
-}
+public BigDecimal calPrice(BigDecimal orderPrice,User user){
+        String vipType=user.getVipType();
+        UserPayService strategy=UserPayServiceStrategyFactory.getByUserType(vipType);
+        return strategy.quote(orderPrice);
+        }
 ```
-
 
 还记得我们前面定义的UserPayServiceStrategyFactory中提供了的register方法吗？他就是用来注册策略服务的。
 
@@ -689,16 +687,17 @@ public BigDecimal calPrice(BigDecimal orderPrice,User user) {
 
 ```java
 @Service
-public class ParticularlyVipPayService implements UserPayService,InitializingBean {
+public class ParticularlyVipPayService implements UserPayService, InitializingBean {
     @Override
     public BigDecimal quote(BigDecimal orderPrice) {
-         if (消费金额大于30元) {
-            return 7折价格;
+        if (消费金额大于30元) {
+            return 7 折价格;
         }
     }
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        UserPayServiceStrategyFactory.register("ParticularlyVip",this);
+        UserPayServiceStrategyFactory.register("ParticularlyVip", this);
     }
 }
 ```
@@ -706,8 +705,6 @@ public class ParticularlyVipPayService implements UserPayService,InitializingBea
 只需要每一个策略服务的实现类都实现InitializingBean接口，并实现其afterPropertiesSet方法，在这个方法中调用UserPayServiceStrategyFactory.register即可。
 
 这样，在Spring初始化的时候，当创建VipPayService、SuperVipPayService和ParticularlyVipPayService的时候，会在Bean的属性初始化之后，把这个Bean注册到UserPayServiceStrategyFactory中。
-
-
 
 ### 责任链模式
 
@@ -721,8 +718,7 @@ public class ParticularlyVipPayService implements UserPayService,InitializingBea
 + 在对检验信息进行交易的时候适合使用责任链模式
 + 在审批流程中适合使用责任链模式
 
-
->假设有如下的业务场景：某视频网站需要对上架的视频课程进行审核（检查是否有手记和视频）如果都有则允许上架，没有则不允许上架，首先审核的是是否含有手记。
+> 假设有如下的业务场景：某视频网站需要对上架的视频课程进行审核（检查是否有手记和视频）如果都有则允许上架，没有则不允许上架，首先审核的是是否含有手记。
 
 课程实体类：
 
@@ -731,24 +727,31 @@ public class Course {
     private String name;
     private String article;
     private String video;
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getArticle() {
         return article;
     }
+
     public void setArticle(String article) {
         this.article = article;
     }
+
     public String getVideo() {
         return video;
     }
+
     public void setVideo(String video) {
         this.video = video;
     }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -768,7 +771,7 @@ public class Course {
  *
  * 所有的批准者都需要继承这个批准者
  */
-public  abstract class Approver {
+public abstract class Approver {
     //这个类的核心是需要包含一个与自己相同类型的对象
     protected Approver approver;
 
@@ -799,16 +802,16 @@ public  abstract class Approver {
 public class ArticleApprover extends Approver {
     @Override
     public void deployCourse(Course course) {
-        if (StringUtils.isNoneEmpty(course.getArticle())){
+        if (StringUtils.isNoneEmpty(course.getArticle())) {
             System.out.println(course.getName() + "包含手记, 审批通过");
-            if (approver != null){
+            if (approver != null) {
                 approver.deployCourse(course);
             }
-        }else{
+        } else {
             System.out.println(course.getName() + "不包含手记, 审批不通过");
             return;
         }
-   }
+    }
 }
 ```
 
@@ -821,16 +824,16 @@ public class ArticleApprover extends Approver {
 public class VideoApprover extends Approver {
     @Override
     public void deployCourse(Course course) {
-        if (StringUtils.isNoneEmpty(course.getVideo())){
+        if (StringUtils.isNoneEmpty(course.getVideo())) {
             System.out.println(course.getName() + "包含视频, 审批通过");
-            if (approver != null){
+            if (approver != null) {
                 approver.deployCourse(course);
             }
-        }else{
+        } else {
             System.out.println(course.getName() + "不包含视频, 审批不通过");
             return;
         }
-   }
+    }
 }
 ```
 
@@ -849,7 +852,7 @@ public class Test {
 
         articleApprover.setNextApprover(videoApprover);
         articleApprover.deployCourse(course);
-        
+
         // 注意只有一个审核员发布
         // 回循环调用,造成内存溢出
         //videoApprover.setNextApprover(articleApprover);
