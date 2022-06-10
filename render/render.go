@@ -67,6 +67,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 		}
 		sepratedList[indexKey][k] = v
 	}
+
 	for k, v := range sepratedList {
 		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
 		err := GenerateList(indexTemplate, v, filepath.Join(outputPath, k, "index.html"))

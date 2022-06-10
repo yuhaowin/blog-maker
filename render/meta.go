@@ -10,12 +10,12 @@ import (
 )
 
 type ContentInfo struct {
-	Title      string
+	NeedRender bool
 	Ext        string
+	Title      string
 	IndexKey   string
 	ModifyTime time.Time
 	CreateDate time.Time
-	NeedRender bool
 }
 
 func (c ContentInfo) IsContent() bool {

@@ -43,7 +43,8 @@ func main() {
 			s.ContentDir = cwdPath(contentFolder)
 			s.PostList.UpdateRenderList(s.ContentDir)
 			log.Println("Starting HTTP server at http://localhost:8080/")
-			log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer)))
+			err := http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer))
+			log.Fatal(err)
 			return
 		case "h":
 			printHelp()
@@ -86,6 +87,7 @@ func (s *viewingServer) viewingServer(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//有参数，有返回值
 func cwdPath(subPath ...string) string {
 	// using the function
 	workDir, err := os.Getwd()
@@ -98,6 +100,7 @@ func cwdPath(subPath ...string) string {
 	return workDir
 }
 
+//无参数，无返回值
 func printHelp() {
 	fmt.Println("./blog-maker s \n", "\trender all markdown files and then start a HTTP server to exhibit your website")
 	fmt.Println("./blog-maker -o path \n", "\trender all markdown files in content folder to path, default path is ./public")
