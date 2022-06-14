@@ -12,6 +12,12 @@ go build -o blog-maker main.go
 ./blog-maker s
 ```
 
+### Render all markdown files in content folder to path
+
+```bash
+./blog-maker -o ./blog
+```
+
 ### Classify your articles
 
 If you want to classify your articles into different groups, you should create a subfolder into `content`, and then add

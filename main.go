@@ -13,13 +13,6 @@ import (
 	"text/template"
 )
 
-type viewingServer struct {
-	ContentDir    string
-	PostList      render.RenderList
-	PostTemplate  *template.Template
-	IndexTemplate *template.Template
-}
-
 var (
 	addr          = ":8080"
 	metaPath      = ".meta"
@@ -30,20 +23,58 @@ var (
 	outputFolder  = flag.String("o", "public", "")
 )
 
+type viewingServer struct {
+	ContentDir    string
+	PostList      render.RenderList
+	PostTemplate  *template.Template
+	IndexTemplate *template.Template
+}
+
+// viewingServer 结构体的方法
+func (server *viewingServer) viewing(writer http.ResponseWriter, request *http.Request) {
+	var err error
+	p := strings.TrimSpace(request.URL.Path)
+	if p[len(p)-1] == '/' {
+		err = render.GenerateListWithPath(server.IndexTemplate, server.PostList, p, writer)
+	} else if strings.Index(p, "/resource/images") == 0 {
+		f, err := os.Open(cwdPath(p))
+		if err != nil {
+			writer.WriteHeader(http.StatusNotFound)
+			return
+		}
+		io.Copy(writer, f)
+	} else {
+		if p, ok := server.PostList[p]; ok {
+			err = render.GeneratePostOut(server.PostTemplate, p.GetMDPath(server.ContentDir), writer)
+		} else {
+			writer.WriteHeader(http.StatusNotFound)
+			return
+		}
+	}
+	if err != nil {
+		log.Println(err)
+		writer.WriteHeader(http.StatusInternalServerError)
+	} else {
+		writer.WriteHeader(http.StatusOK)
+	}
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
 func main() {
 	log.SetFlags(log.Lshortfile)
 
 	if len(os.Args) == 2 {
-		s := viewingServer{}
-		s.PostList = make(render.RenderList)
-		s.PostTemplate = render.GetTemplate(cwdPath(templatePath), postTemplate)
-		s.IndexTemplate = render.GetTemplate(cwdPath(templatePath), indexTemplate)
+		server := viewingServer{}
+		server.PostList = make(render.RenderList)
+		server.PostTemplate = render.GetTemplate(cwdPath(templatePath), postTemplate)
+		server.IndexTemplate = render.GetTemplate(cwdPath(templatePath), indexTemplate)
 		switch os.Args[1] {
 		case "s":
-			s.ContentDir = cwdPath(contentFolder)
-			s.PostList.UpdateRenderList(s.ContentDir)
+			server.ContentDir = cwdPath(contentFolder)
+			server.PostList.UpdateRenderList(server.ContentDir)
 			log.Println("Starting HTTP server at http://localhost:8080/")
-			err := http.ListenAndServe(addr, http.HandlerFunc(s.viewingServer))
+			err := http.ListenAndServe(addr, http.HandlerFunc(server.viewing))
 			log.Fatal(err)
 			return
 		case "h":
@@ -57,34 +88,6 @@ func main() {
 	flag.Parse()
 	outputPath, _ := filepath.Abs(*outputFolder)
 	render.Render(cwdPath(templatePath), cwdPath(contentFolder), filepath.Join(outputPath, metaPath), outputPath)
-}
-
-func (s *viewingServer) viewingServer(w http.ResponseWriter, r *http.Request) {
-	var err error
-	p := strings.TrimSpace(r.URL.Path)
-	if p[len(p)-1] == '/' {
-		err = render.GenerateListWithPath(s.IndexTemplate, s.PostList, p, w)
-	} else if strings.Index(p, "/resource/images") == 0 {
-		f, err := os.Open(cwdPath(p))
-		if err != nil {
-			w.WriteHeader(http.StatusNotFound)
-			return
-		}
-		io.Copy(w, f)
-	} else {
-		if p, ok := s.PostList[p]; ok {
-			err = render.GeneratePostOut(s.PostTemplate, p.GetMDPath(s.ContentDir), w)
-		} else {
-			w.WriteHeader(http.StatusNotFound)
-			return
-		}
-	}
-	if err != nil {
-		log.Println(err)
-		w.WriteHeader(http.StatusInternalServerError)
-	} else {
-		w.WriteHeader(http.StatusOK)
-	}
 }
 
 //有参数，有返回值
