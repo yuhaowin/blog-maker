@@ -118,7 +118,7 @@ func (a ByDate) Less(i, j int) bool {
 	return a[i].CreateDateStr > a[j].CreateDateStr
 }
 
-func GenerateList(tmpl *template.Template, contentList RenderList, outputFile string) error {
+func GenerateList(tmpl *template.Template, contentList ContentList, outputFile string) error {
 	outFile, err := os.OpenFile(outputFile, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0766)
 	if err != nil {
 		return err
@@ -126,7 +126,7 @@ func GenerateList(tmpl *template.Template, contentList RenderList, outputFile st
 	return GenerateListOut(tmpl, contentList, outFile)
 }
 
-func GenerateListOut(tmpl *template.Template, contentList RenderList, output io.Writer) error {
+func GenerateListOut(tmpl *template.Template, contentList ContentList, output io.Writer) error {
 	var l ByDate
 	for _, content := range contentList {
 		if content.IsContent() {
@@ -142,7 +142,7 @@ func GenerateListOut(tmpl *template.Template, contentList RenderList, output io.
 	return tmpl.Execute(output, &l)
 }
 
-func GenerateListWithPath(tmpl *template.Template, contentList RenderList, path string, output io.Writer) error {
+func GenerateListWithPath(tmpl *template.Template, contentList ContentList, path string, output io.Writer) error {
 	var l ByDate
 	for _, content := range contentList {
 		if content.IsContent() && strings.Index(content.IndexKey, path) == 0 {

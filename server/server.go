@@ -10,7 +10,7 @@ import (
 
 type ViewServer struct {
 	ContentDir    string
-	PostList      render.RenderList
+	PostList      render.ContentList
 	PostTemplate  *template.Template
 	IndexTemplate *template.Template
 }

@@ -46,7 +46,7 @@ func main() {
 
 func startServer() error {
 	server := server.ViewServer{}
-	server.PostList = make(render.RenderList)
+	server.PostList = make(render.ContentList)
 	server.PostTemplate = render.GetTemplate(cwdPath(templatePath), postTemplate)
 	server.IndexTemplate = render.GetTemplate(cwdPath(templatePath), indexTemplate)
 	server.ContentDir = cwdPath(contentFolder)

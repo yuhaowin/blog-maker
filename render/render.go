@@ -8,7 +8,7 @@ import (
 )
 
 func Render(tmplPath, contentPath, metaPath, outputPath string) {
-	renderList := make(RenderList)
+	renderList := make(ContentList)
 	err := readContentInfo(renderList, metaPath)
 	if err != nil {
 		log.Println(err.Error())
@@ -47,7 +47,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 
 	//generate homepage list, which sort by created time
 	log.Println("Render index")
-	sepratedList := make(map[string]RenderList)
+	sepratedList := make(map[string]ContentList)
 	for k, v := range renderList {
 		if !v.IsContent() {
 			continue
@@ -63,7 +63,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 			panic("unsupported sub dictionary")
 		}
 		if _, ok := sepratedList[indexKey]; !ok {
-			sepratedList[indexKey] = make(RenderList)
+			sepratedList[indexKey] = make(ContentList)
 		}
 		sepratedList[indexKey][k] = v
 	}
