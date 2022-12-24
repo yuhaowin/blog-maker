@@ -14,7 +14,7 @@ jobs:
         env:
           ARGS: "-rltDvP --chmod=Dugo=rx,Fugo=r --delete"
           SOURCE: ../blog
-          TARGET: ~/app/nginx/html/
+          TARGET: ~/app/nginx/resource/
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
