@@ -64,10 +64,10 @@
 
 ________________
 
-+ [参考资料一](https://www.jianshu.com/p/e279d4a979fa)
++ [Mdict词典分享](https://www.jianshu.com/p/e279d4a979fa)
 
-+ [参考资料二](https://www.jianshu.com/p/0be3e3de8f84)
++ [Mdict to macOS Dictionary转换笔记](https://kaihao.io/2018/mdict-to-macos-dictionary/)
 
-+ [参考资料三](https://www.jianshu.com/p/c57be986589b)
++ [Mdic 字典文件转换 mac 原生字典](https://blog.i-ll.cc/archives/582/)
 
-+ [参考资料四](https://kaihao.io/2018/mdict-to-macos-dictionary/)
++ [《柯林斯双解》for macOS](https://placeless.net/blog/macos-dictionaries)
