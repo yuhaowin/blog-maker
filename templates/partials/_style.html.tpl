@@ -115,7 +115,13 @@ body {
     background-color: #fcfcfa;
 }
 
+strong {
+    color: #212529;
+    font-weight: 900;
+}
+
 table {
+    display: flow-root;
     border-collapse: collapse;
     margin: 0 auto;
     text-align: center;
