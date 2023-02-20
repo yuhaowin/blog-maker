@@ -1,12 +1,4 @@
----
-title: 'Comparable & Comparator'
-date: 2020-06-15 20:38:03
-tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
----
+# Comparable & Comparator
 
 > Java 中 Comparable 接口和 Comparator 接口的区别、分别在什么场景使用。
 

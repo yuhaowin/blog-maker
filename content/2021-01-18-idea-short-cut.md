@@ -1,14 +1,4 @@
----
-title: 'IDEA 快捷键'
-date: 2021-01-18 15:55:30
-tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
----
-
-### IDEA 快捷键
+# IDEA 快捷键
 
 1. 全文查找：command + shift + f
 2. 格式化代码：command + option + L

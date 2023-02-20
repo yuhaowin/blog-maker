@@ -1,14 +1,4 @@
----
-title: 'Beyond Compare for Mac 试用'
-date: 2020-10-23 10:45:53
-tags: [杂项]
-published: true
-hideInList: false
-feature: 
-isTop: false
----
-Mac 版 Beyond Compare 无限试用。
-<!-- more -->
+# Beyond Compare for Mac 试用
 
 [官网下载地址](http://www.scootersoftware.com/download.php)
 

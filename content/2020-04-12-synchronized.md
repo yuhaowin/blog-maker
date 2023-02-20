@@ -1,14 +1,6 @@
----
-title: 'SYNCHRONIZED IN JAVA'
-date: 2020-04-12 16:48:35
-tags: [多线程与高并发-进程内]
-published: true
-hideInList: false
-feature: 
-isTop: false
----
+# SYNCHRONIZED IN JAVA
 JAVA 中 synchronized 的常用方法，和锁升级的过程。
-<!-- more -->
+
 ### synchronized 锁定的是什么？
 
 > 我们常说使用 synchronized 关键字锁定一个方法，使得这个方法变成同步方法；使用 synchronized 关键字锁定一段代码块，使得这段代码变成同步代码块，其用法如下：

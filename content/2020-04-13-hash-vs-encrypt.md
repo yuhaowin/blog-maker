@@ -1,14 +1,6 @@
----
-title: '扫盲｜HASH & ENCRYPT'
-date: 2020-04-13 18:11:01
-tags: [知识扫盲]
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2020/05/30/205312.jpg
-isTop: false
----
+# HASH & ENCRYPT
 Hash 算法 和 Encrypt 算法的区别和对应的使用场景。
-<!-- more -->
+
 ### 哈希（Hash）与加密（Encrypt）的区别
 
 > Hash 是将目标文本转换成具有相同长度的、不可逆的杂乱字符串，这个杂乱字符串也叫做消息摘要；Encrypt 是将目标文本转换为具有不同长度的、可逆的密文。

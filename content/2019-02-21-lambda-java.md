@@ -1,15 +1,4 @@
----
-title: '为什么要引入 Lambda 表达式'
-date: 2021-01-18 15:53:04
-tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
----
-
-
-### 为什么要引入 Lambda 表达式
+# 为什么要引入 Lambda 表达式
 
 
 

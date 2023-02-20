@@ -1,12 +1,4 @@
----
-title: 'THREAD_LOCAL 学习'
-date: 2020-05-07 23:54:36
-tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
----
+# THREAD_LOCAL 学习
 
 ### ThreadLocal 简单使用
 
@@ -14,58 +6,65 @@ isTop: false
 >
 > ThreadLocal 类一共就 3 个公开的方法，`set(T value)`、`get()`、`remove()`。
 
-每一个线程都有一个存放线程本地变量的容器，通过 ThreadLocal.set() 将变量的引用保存到各线程的自己的一个容器中，在执行 ThreadLocal.get() 时，各线程从自己的容器中取出放进去的对象，因此取出来的是各线程自己中的对象，ThreadLocal 实例是作为这个容器的 key 来使用的。
-
+每一个线程都有一个存放线程本地变量的容器，通过 ThreadLocal.set() 将变量的引用保存到各线程的自己的一个容器中，在执行
+ThreadLocal.get() 时，各线程从自己的容器中取出放进去的对象，因此取出来的是各线程自己中的对象，ThreadLocal 实例是作为这个容器的
+key 来使用的。
 
 ### 源码分析
 
 ```java
-    public void set(T value) {
+    public void set(T value){
         // 获取当前线程
-        Thread t = Thread.currentThread();
+        Thread t=Thread.currentThread();
         // 获取当前线程存放线程本地变量的容器
-        ThreadLocalMap map = getMap(t);
+        ThreadLocalMap map=getMap(t);
         // 如果存在就直接 set，没有则创建并 set
-        if (map != null)
-            map.set(this, value);
+        if(map!=null)
+        map.set(this,value);
         else
-            createMap(t, value);
-    }
+        createMap(t,value);
+        }
 
-		ThreadLocalMap getMap(Thread t) {
-      	// Thread 类中有一个 ThreadLocalMap 类型的成员变量
+        ThreadLocalMap getMap(Thread t){
+        // Thread 类中有一个 ThreadLocalMap 类型的成员变量
         // 但是该变量的维护是由 ThreadLocal 负责的
-      	return t.threadLocals;
- 		}
+        return t.threadLocals;
+        }
 
-		void createMap(Thread t, T firstValue) {
-        t.threadLocals = new ThreadLocalMap(this, firstValue);
-    }
+        void createMap(Thread t,T firstValue){
+        t.threadLocals=new ThreadLocalMap(this,firstValue);
+        }
 ```
 
 ```java
-    public T get() {
-        Thread t = Thread.currentThread();
-        ThreadLocalMap map = getMap(t);
-        if (map != null) {
-            ThreadLocalMap.Entry e = map.getEntry(this);
-            if (e != null) {
-                @SuppressWarnings("unchecked")
-                T result = (T)e.value;
-                return result;
-            }
-        }
-      	// 如果没 set 就开始 get，上面的 map 为 null，
-      	// 就会先初始化后，再获取，默认初始化的值是 null
-        return setInitialValue();
-    }
+    public T get(){
+        Thread t=Thread.currentThread();
+        ThreadLocalMap map=getMap(t);
+        if(map!=null){
+        ThreadLocalMap.Entry e=map.getEntry(this);
+        if(e!=null){
+@SuppressWarnings("unchecked")
+                T result=(T)e.value;
+                        return result;
+                        }
+                        }
+                        // 如果没 set 就开始 get，上面的 map 为 null，
+                        // 就会先初始化后，再获取，默认初始化的值是 null
+                        return setInitialValue();
+                        }
 ```
 
 ### ThreadLocal 存在内存泄露？
 
-> 是这样的，一般来说，存放 ThreadLocalMap 和 Thread 是同生死的，ThreadLocalMap 的 key 为 ThreadLocal 实例，value 为 存放的变量。当 Thread 生命周期结束，被 GC 回收时，ThreadLocalMap 也会被回收，所谓的内存泄露是指，在当前 Thread 还在使用期间，由于 ThreadLocalMap 的 key 是 弱引用，在发生 GC 时，可能被回收（此时 Thread 还没有被回收），既然 key 被回收，那 value 也就没有存在的意义了，但是此时的 value 由于强引用的存在，没有被回收。这就是人们说的 ThreadLocal 出现的内存泄露。但是当 Thread 被回收时，ThreadLocalMap 和 其中的 value 依然会被回收的。
+> 是这样的，一般来说，存放 ThreadLocalMap 和 Thread 是同生死的，ThreadLocalMap 的 key 为 ThreadLocal 实例，value 为 存放的变量。当
+> Thread 生命周期结束，被 GC 回收时，ThreadLocalMap 也会被回收，所谓的内存泄露是指，在当前 Thread 还在使用期间，由于
+> ThreadLocalMap 的 key 是 弱引用，在发生 GC 时，可能被回收（此时 Thread 还没有被回收），既然 key 被回收，那 value
+> 也就没有存在的意义了，但是此时的 value 由于强引用的存在，没有被回收。这就是人们说的 ThreadLocal 出现的内存泄露。但是当
+> Thread 被回收时，ThreadLocalMap 和 其中的 value 依然会被回收的。
 
-> 所以只有在线程池中，使用了 ThreadLocal 才需要特别注意这个问题，因为核心线程是不会被销毁的，如果这些线程的 ThreadLocalMap 中存在用不到的 value，且由于 Thread 一直存在 value 不能被 回收，可以认为是真正发生了内存泄露。解决办法就是：使用完后主动的 remove 掉。
+> 所以只有在线程池中，使用了 ThreadLocal 才需要特别注意这个问题，因为核心线程是不会被销毁的，如果这些线程的 ThreadLocalMap
+> 中存在用不到的 value，且由于 Thread 一直存在 value 不能被 回收，可以认为是真正发生了内存泄露。解决办法就是：使用完后主动的
+> remove 掉。
 
 代码如下：
 
@@ -97,9 +96,9 @@ public class ThreadPoolTest {
 
 ![142454](https://image.yuhaowin.com/2020/05/27/142454.jpg)
 
-
 ### 补充知识 - 强、软、弱、虚引用
->Java中提供这四种引用类型主要有两个目的：第一是可以通过代码的方式决定某些对象的生命周期；第二是有利于JVM进行垃圾回收。
+
+> Java中提供这四种引用类型主要有两个目的：第一是可以通过代码的方式决定某些对象的生命周期；第二是有利于JVM进行垃圾回收。
 
 ```java
 public class M {
@@ -110,7 +109,9 @@ public class M {
     }
 }
 ```
+
 #### 强引用
+
 > 对象被引用时，不会被 GC 回收。
 
 ```java
@@ -123,10 +124,12 @@ public class NormalReference {
     }
 }
 ```
+
 控制台打印 finalize ，说明到 m 置为 null 后，new M() 这个对象没有被引用，所以 GC 会清理掉。
 
 #### 软引用
->软引用在内存充足时可能不会被 GC 回收，在内存不够时会被回收。
+
+> 软引用在内存充足时可能不会被 GC 回收，在内存不够时会被回收。
 
 ```java
 /**
@@ -156,7 +159,8 @@ public class SoftReference {
 ```
 
 #### 弱引用
->发生 GC 时就会被回收。
+
+> 发生 GC 时就会被回收。
 
 ```java
 /**
@@ -178,6 +182,7 @@ public class WeakReference {
     }
 }
 ```
+
 ![001723](https://image.yuhaowin.com/2020/05/28/001723.png)
 
 ```java
@@ -191,7 +196,9 @@ public class WeakReference1 {
     }
 }
 ```
+
 #### 虚引用
+
 > 未知，使用很少。
 ------
 <br/>
@@ -213,6 +220,7 @@ public class WeakReference1 {
 + [参考资料7](https://www.jianshu.com/p/1a5d288bdaee)
 
 + [参考资料8](https://juejin.im/post/5ba9a6665188255c791b0520)
+
 </details>
 
 

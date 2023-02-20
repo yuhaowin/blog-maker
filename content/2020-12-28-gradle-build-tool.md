@@ -1,12 +1,4 @@
----
-title: 'Gradle 项目构建工具'
-date: 2020-12-28 10:18:31
-tags: []
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2020/12/28/103334.png
-isTop: false
----
+# Gradle 项目构建工具
 
 ### Gradle
 

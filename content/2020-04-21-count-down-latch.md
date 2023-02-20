@@ -1,14 +1,7 @@
----
-title: 'JUC｜COUNTDOWNLATCH'
-date: 2020-04-21 23:28:08
-tags: [多线程与高并发-进程内]
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2020/04/22/011401.jpg
-isTop: false
----
+# JUC｜COUNTDOWNLATCH
+
 > CountDown 倒数的意思，Latch 门栓，倒数完成，门栓打开，CountDownLatch 使一个线程等待其他线程各自执行完毕后再执行。
-<!-- more -->
+
 ### CountDownLatch
 
 **CountDownLatch 是通过一个计数器来实现的，计数器的初始值一般是线程的数量。每当一个线程执行完毕后，计数器的值就减 1，当计数器的值为 0 时，表示所有线程都执行完毕，然后执行过 await 方法的线程就可以恢复工作了。计数器的初始值也可以是任务数量，任务被线程池中的线程执行，每完成一个任务计数器就减 1。当所有任务执行完成，再继续执行其他事情。**

@@ -1,12 +1,5 @@
----
-title: '可执行 jar 打包方式'
-date: 2021-12-17 14:35:17
-tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
----
+# 可执行 jar 打包方式
+
 > 一般而言 maven 打出的 jar 只包含工程代码，不包含依赖的第三方 jar。这类 jar 无法直接使用。
 
 为了简化部署，期望一个项目可以直接通过 `java -jar` 的方式启动。这种 jar 包，被称为可执行 jar。

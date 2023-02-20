@@ -1,14 +1,6 @@
----
-title: 'some case'
-date: 2020-11-18 16:07:59
-tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
----
+# some case
 
-?> 对List中的元素进行更优雅的操作。
+> 对List中的元素进行更优雅的操作。
 
 对元素某个属性进行分组
 

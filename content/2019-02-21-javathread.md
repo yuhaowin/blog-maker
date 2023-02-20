@@ -1,16 +1,4 @@
----
-title: 'JAVA THREAD'
-date: 2020-04-08 00:57:35
-tags: [多线程与高并发-进程内]
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2020/04/08/005716.jpg
-isTop: false
----
-<!-- more -->
-
-Java 线程基本概念。
-
+# JAVA THREAD
 
 ### 单线程 🆚 多线程
 

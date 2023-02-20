@@ -1,41 +1,25 @@
----
-title: 'JUC | READ_WRITE_LOCK'
-date: 2020-04-26 22:31:56
-tags: []
-published: true
-hideInList: false
-feature: 
-isTop: false
----
-
-<!-- more -->
-
-
+# JUC | READ_WRITE_LOCK
 
 ### READ_WRITE_LOCK 读写锁
 
-> 读写锁的出现是为了提高锁的效率，实现在 `读与读` 之间锁是共享的，`写与写` 、`读与写` 之间锁是互斥的。这样在 **读多写少** 的场景中十分适合使用读写锁。
-
-
+> 读写锁的出现是为了提高锁的效率，实现在 `读与读`之间锁是共享的，`写与写`、`读与写`之间锁是互斥的。这样在 **读多写少**
+> 的场景中十分适合使用读写锁。
 
 ### 源码
 
 ```java
 public interface ReadWriteLock {
     Lock readLock();
+
     Lock writeLock();
 }
 ```
 
-
-
 在 JDK 中 `ReentrantReadWriteLock` 是 `ReadWriteLock` 的实现，同时具有可重入性，
-
-
 
 ### 读写锁的升级 & 降级
 
-> 对于对写锁而言，锁升级是指：从读锁变成写锁，锁降级是指：从写锁变成读锁。`ReentrantReadWriteLock` 锁可以降级，但是不可以升级。
+> 对于对写锁而言，锁升级是指：从读锁变成写锁，锁降级是指：从写锁变成读锁。`ReentrantReadWriteLock`锁可以降级，但是不可以升级。
 
 
 
@@ -52,8 +36,6 @@ public class T10_ReadWriteLock2 {
     }
 }
 ```
-
-
 
 **写锁可以降级为读锁**
 

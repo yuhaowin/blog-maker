@@ -1,15 +1,7 @@
----
-title: '容器 - 集合｜Queue'
-date: 2020-05-30 23:42:34
-tags: []
-published: true
-hideInList: false
-feature: https://image.yuhaowin.com/2020/05/30/234530.jpg
-isTop: false
----
+# 容器 - 集合｜Queue
+
 java 中常用的集合 - Queue。
 
-<!-- more -->
 
 ### Queue - 接口
 

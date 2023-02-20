@@ -1,4 +1,3 @@
-
 # Bob 有道词典单词本插件
 
 ![](https://image.yuhaowin.com/2021/01/03/002137.png)
