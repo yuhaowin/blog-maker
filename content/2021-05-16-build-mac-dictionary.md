@@ -70,4 +70,6 @@ ________________
 
 + [Mdic 字典文件转换 mac 原生字典](https://blog.i-ll.cc/archives/582/)
 
-+ [《柯林斯双解》for macOS](https://placeless.net/blog/macos-dictionaries)
++ [柯林斯双解 for macOS](https://placeless.net/blog/macos-dictionaries)
+
++ [mac dictionary 开发文档](https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/DictionaryServicesProgGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40006152-CH1-SW1)
