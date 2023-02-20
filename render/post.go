@@ -32,7 +32,6 @@ func init() {
 			),
 		),
 		goldmark.WithRendererOptions(
-			//html.WithHardWraps(),
 			html.WithXHTML(),
 			html.WithUnsafe(),
 		),
