@@ -83,14 +83,14 @@
 | 10  |   ð    | **th**en     | there<br/>that<br/>those        | 
 | 11  |   s    | **s**oon     | sip<br/>soon<br/>soup           | 
 | 12  |   z    | **z**ero     | zip<br/>zoom<br/>zoo            | 
-| 13  |   ʃ    | **sh**ip     | mesh<br/>fresh<br/>harsh        | 
+| 13  |   ʃ    | **sh**ip     | should<br/>fresh<br/>special    | 
 | 14  |   ʒ    | plea**s**ure | measure<br/>pleasure<br/>garage | 
-| 15  |   h    | **h**ot      | hat<br/>hot<br/>high            | 
-| 16  |   tʃ   | **ch**eer    | chuck<br/>chop<br/>choke        | 
-| 17  |   dʒ   | **j**ump     | jug<br/>job<br/>joke            | 
+| 15  |   tʃ   | **ch**eer    | chuck<br/>chop<br/>attach       | 
+| 16  |   dʒ   | **j**ump     | jug<br/>job<br/>just            | 
 | 18  |   m    | su**m**      | map<br/>met<br/>room            | 
 | 19  |   n    | su**n**      | nap<br/>net<br/>noon            | 
 | 20  |   ŋ    | su**ng**     | sing<br/>long<br/>sung          | 
+| 17  |   h    | **h**ot      | hat<br/>hot<br/>high            | 
 | 21  |   w    | **w**et      | was<br/>why<br/>wide            | 
 | 22  |   l    | **l**et      | lack<br/>all<br/>school         | 
 | 23  |   r    | **r**ed      | rat<br/>red<br/>read            | 
@@ -112,21 +112,8 @@
 | 名称音音标 | /bi:/ | /si:/    | /di:/ | /dʒeɪ/ | /keɪ/ | /pi:/ | /ti:/ | /vi:/ | /zi:/ |
 | 发音的音标 | /b/   | /s/、 /k/ | /d/   | /dʒ/   | /k/   | /p/   | /t/   | /v/   | /z/   |
 
-+ 对比法，和汉语拼音对比
 
-| G   | H   | Y   | W   | R   |
-|-----|-----|-----|-----|-----|
-| /g/ | /h/ | /j/ | /w/ | /r/ |
 
-|      |     |      |      |
-|------|-----|------|------|
-| /tʃ/ | /ʃ/ | /dz/ | /ts/ |
-| ch   | sh  | z    | c    |
-
-|     |       |
-|-----|-------|
-| /ʒ/ | /ŋ/   |
-| 日   | 后鼻音 n | 
 
 ### 重点、疑难、易混淆音标
 
