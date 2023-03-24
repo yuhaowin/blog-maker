@@ -1,7 +1,5 @@
 # Java Normal Thread & Daemon Thread
 
-![](https://image.yuhaowin.com/2021/12/08/000031.png)
-
 > 有一天我日常启动我的项目后，我陷入了深深的沉思，我搞不清楚，为什么我的项目可以运行而没有终止。
 
 

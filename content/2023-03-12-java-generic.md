@@ -8,8 +8,7 @@
     class name<T1, T2, Tn> { /* ... */ }
 ```
 
-把 T1, T2, and Tn 称为泛型类型(Generic Types)，或者类型参数(type parameters), 类型参数可以在类中任何地方使用。
-T1, T2, and Tn 在使用时可以是任何的类，接口，数组，甚至是另一个泛型类。
+Java 把上述 T1, T2, and Tn 称为泛型类型(Generic Types)，或者类型参数(type parameters), 类型参数可以在类中任何地方使用。
 
 ```text
     public class Box<T> {
@@ -21,9 +20,17 @@ T1, T2, and Tn 在使用时可以是任何的类，接口，数组，甚至是�
     }
 ```
 
+泛型类的使用
+    
+```text
+    Box<Integer> integerBox = new Box<Integer>();
+    Box<String> stringBox = new Box<String>();
+  ```
+泛型在使用时可以是任何的类、接口、数组、甚至是另一个泛型类。如上述的 T, T1, T2, and Tn 可以是 Integer, String, List<String>, List<T> 等等。
+
 ### 泛型接口
 
-和泛型类一样，泛型接口也可以定义一个或多个类型参数，将类型参数置于接口名的后面，跟着类似于类声明的尖括号。
+和泛型类一样，泛型接口也可以定义一个或多个类型参数，将类型参数置于接口名的后面。
 
 ```text
     public interface Pair<K, V> {
@@ -47,7 +54,7 @@ T1, T2, and Tn 在使用时可以是任何的类，接口，数组，甚至是�
     }
 ```
 
-OrderedPair<K, V> 是泛型的定义，implements Pair<K, V> 中的K和V是泛型的使用，而不是定义，因为OrderedPair<K, V>已经定义了K和V。
+其中 OrderedPair<K, V> 是泛型的定义，implements Pair<K, V> 中的 K 和 V 是泛型的使用，而不是定义，因为OrderedPair<K, V> 已经定义了 K 和 V。
 
 ```text
     OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));
@@ -55,8 +62,8 @@ OrderedPair<K, V> 是泛型的定义，implements Pair<K, V> 中的K和V是泛�
 
 ### 泛型方法
 
-泛型方法有自己声明的类型参数，这些类型参数的声明放在返回值之前。但类型参数的作用域只限于方法本身。适用于静态方法和实例方法以及泛型类的构造器。
-可以被用到形参声明、方法返回值、方法定义中的变量声明和类型转换。 泛型方法使得该泛型方法的类型参数独立于类而产生变化。泛型方法和泛型类没有关系
+泛型方法有自己声明的类型参数，这些类型参数的声明放在返回值之前。但泛型方法的类型参数的作用域只限于方法本身。适用于静态方法和实例方法以及泛型类的构造器。
+可以被用到方法的参数声明、方法返回值、方法体中变量的声明和类型转换。 泛型方法使得该泛型方法的类型参数独立于类而产生变化。泛型方法和泛型类没有必然关系。
 
 ```text
     public class Util {
@@ -160,7 +167,7 @@ OrderedPair<K, V> 是泛型的定义，implements Pair<K, V> 中的K和V是泛�
 
 + 通配符有且仅有一个边界，而类型参数可以有多个边界。
 + 通配符可以有一个上界或有一个下界，而类型参数不支持下界。
-+ 通配符不能在类、接口中使用，只能在方法中使用。
++ 通配符不能在泛型类、泛型接口定义中使用，只能在泛型方法定义中使用。
 
 ### 类型参数和通配符的选择
 
@@ -184,7 +191,7 @@ OrderedPair<K, V> 是泛型的定义，implements Pair<K, V> 中的K和V是泛�
     }
 ```
 
-### 通配符中 extents 和 super 的选择
+### 通配符中上下界(extents、super) 的选择
 
 遵循 PECS 原则，Producer Extends Consumer Super。
 
@@ -201,6 +208,6 @@ OrderedPair<K, V> 是泛型的定义，implements Pair<K, V> 中的K和V是泛�
 
 ### 参考
 
-https://blog.51cto.com/u_3664660/3213120
-https://docs.oracle.com/javase/tutorial/java/generics/index.html
-https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card
++ https://blog.51cto.com/u_3664660/3213120
++ https://docs.oracle.com/javase/tutorial/java/generics/index.html
++ https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card

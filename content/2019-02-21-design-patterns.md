@@ -1,7 +1,5 @@
 # 常用的设计模式
 
-https://image.yuhaowin.com/2020/04/05/231158.jpg
-
 ## 一、设计原则
 
 ![7大设计原则](https://ws2.sinaimg.cn/large/006tKfTcgy1g0dbrlzsylj310k0l0k1l.jpg)
@@ -127,7 +125,8 @@ public class Test {
 
 #### 1. 静态代理 - JAVA
 
-在代码中显性的创建特定的代理类，使用该类的对象对目标类的对象一些行为进行代理。并且可以根据业务场景对这些行为进行一定程度的增强，如:在被代理的方法前后增加其他行为。
+在代码中显性的创建特定的代理类，使用该类的对象对目标类的对象一些行为进行代理。并且可以根据业务场景对这些行为进行一定程度的增强，如:
+在被代理的方法前后增加其他行为。
 
 假设有以下业务场景：用户在下单时需要根据 userId 对订单数据进行分库存储，分别存储在 DB0、DB1 两个数据库中。
 
@@ -259,7 +258,8 @@ public class Test {
 
 #### 2. 基于 JDK 实现的动态代理 - JAVA
 
-jdk实现的动态代理只能对实现了接口的类生成代理,并不能针对一个具体的实现类进行代理，并且在 jdk 动态代理中用到的代理类是在程序调用到代理类对象时,才由jvm真正创建,jvm根据传入的真正的业务实现类对象以及方法名
+jdk实现的动态代理只能对实现了接口的类生成代理,并不能针对一个具体的实现类进行代理，并且在 jdk
+动态代理中用到的代理类是在程序调用到代理类对象时,才由jvm真正创建,jvm根据传入的真正的业务实现类对象以及方法名
 动态的创建了一个代理类的class文件 ,这个class文件被字节码引擎执行,然后通过该代理类的对象进行方法的调用。
 
 引入的业务场景和上述一样，只是代理类是动态生成的。
@@ -339,7 +339,8 @@ public class Test {
 
 ![](https://ws3.sinaimg.cn/large/006tKfTcgy1g0c3d3ilxhj30ma0aomyx.jpg)
 
-在测试类中通过 OrderServiceDynamicProxy 类的 bind() 钩子方法 返回通过反射生成的代理类的对象，动态生成的代理类是以class文件(Proxy0.class)
+在测试类中通过 OrderServiceDynamicProxy 类的 bind() 钩子方法
+返回通过反射生成的代理类的对象，动态生成的代理类是以class文件(Proxy0.class)
 的形式存在，通过对该class文件进行持久化，和通过jad反编译成java文件如下：
 
 ```java
@@ -437,7 +438,8 @@ public final class $Proxy0 extends Proxy implements OrderService {
 ```
 
 由于继承了Proxy，所以可以调用父类的 h 参数 即：invocationhandler 参数，这个参数是在bind()这个方法中通过
-Proxy.newProxyInstance(cls.getClassLoader(), cls.getInterfaces(), this) 传入，这里的this 表示的是 OrderServiceDynamicProxy 但是
+Proxy.newProxyInstance(cls.getClassLoader(), cls.getInterfaces(), this) 传入，这里的this 表示的是
+OrderServiceDynamicProxy 但是
 OrderServiceDynamicProxy这个类实现了Invocationhandler 所以this就是invocationhandler
 
 所以在代理类的saveOrder方法中调用的super.h.invoke() 就是调用OrderServiceDynamicProxy类的重写的invoke();
@@ -461,7 +463,8 @@ OrderServiceDynamicProxy这个类实现了Invocationhandler 所以this就是invo
 + 一次性实现一个算法的不变的部分,并将可变的行为留个子类实现
 + 各子类中公共的行为被抽取出来,并集中到一个公共的父类中,以避免代码重复.
 
-如：把东西放入冰箱中，可以使用模板方法，打开冰箱 --> 放东西 --> 关闭冰箱；整个算法的步骤和顺序是不变的，而且打开冰箱和关闭冰箱是固定的，这两个步骤由父类实现，具体放入什么东西有具体的子类决定。
+如：把东西放入冰箱中，可以使用模板方法，打开冰箱 --> 放东西 -->
+关闭冰箱；整个算法的步骤和顺序是不变的，而且打开冰箱和关闭冰箱是固定的，这两个步骤由父类实现，具体放入什么东西有具体的子类决定。
 
 模板方法的扩展
 
@@ -686,6 +689,7 @@ public BigDecimal calPrice(BigDecimal orderPrice,User user){
 那么，我们将前面的各个策略类稍作改造即可：
 
 ```java
+
 @Service
 public class ParticularlyVipPayService implements UserPayService, InitializingBean {
     @Override

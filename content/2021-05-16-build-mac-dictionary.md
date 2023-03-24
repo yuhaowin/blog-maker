@@ -1,7 +1,5 @@
 # 编译自己的 Mac 词典
 
-![](https://image.yuhaowin.com/2021/12/08/001502.png)
-
 + 下载词典文件
 
 下载 mdict 类型的词典，以朗文5的 mdict 词典为例，将.mdx与.mdd放在同一个文件夹中。
