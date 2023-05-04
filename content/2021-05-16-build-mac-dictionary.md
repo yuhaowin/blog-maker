@@ -6,15 +6,9 @@
 
 + [安装Command Line Tools for Xcode](https://link.jianshu.com/?t=https%3A%2F%2Fblog.csdn.net%2Fchenyufeng1991%2Farticle%2Fdetails%2F47007979)
 
-+ 下载 Additional Tools for Xcode（用的 Dictionary Development Kit）
-
-把其放入自定义的一个目录中
-
-![105055](https://image.yuhaowin.com/2021/04/16/105055.png)
++ 下载 Additional Tools for Xcode（用的 Dictionary Development Kit） 把其放入自定义的一个目录中
 
 + 从github上克隆 [pyglossary](https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Filius%2Fpyglossary) 项目到自己的目录中
-
-![105432](https://image.yuhaowin.com/2021/04/16/105432.png)
 
 + 安装python-lzo
 
@@ -51,20 +45,15 @@
   ```
 
 + 把编译好的词典文件放入系统词典目录中
-
-![110811](https://image.yuhaowin.com/2021/04/16/110811.png)
-
-![110933](https://image.yuhaowin.com/2021/04/16/110933.png)
-
 + 重新启动「词典」软件
 
-![111042](https://image.yuhaowin.com/2021/04/16/111042.png)
+![232436](https://image.yuhaowin.com/2023/05/04/232436.png)
 
 ________________
 
-+ [Mdict词典分享](https://www.jianshu.com/p/e279d4a979fa)
++ [Mdict 词典分享](https://www.jianshu.com/p/e279d4a979fa)
 
-+ [Mdict to macOS Dictionary转换笔记](https://kaihao.io/2018/mdict-to-macos-dictionary/)
++ [Mdict to macOS Dictionary 转换笔记](https://kaihao.io/2018/mdict-to-macos-dictionary/)
 
 + [Mdic 字典文件转换 mac 原生字典](https://blog.i-ll.cc/archives/582/)
 
