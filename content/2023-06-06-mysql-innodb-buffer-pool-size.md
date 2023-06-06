@@ -55,14 +55,12 @@ sudo yum -y install sysbench
 
 ```shell
 sysbench --version
-
 ```
 
 ##### 3. 准备数据
 
 ```shell
-sysbench oltp_common.lua --time=300 --mysql-host=10.120.68.91 --mysql-port=3306 --mysql-user=root --mysql-password=xkjc_123 --mysql-db=sbtest --table-size=1000000 --tables=10 --threads=32 --events=999999999  prepare
-
+sysbench oltp_common.lua --time=300 --mysql-host=10.120.68.91 --mysql-port=3306 --mysql-user=root --mysql-password=xkjc_123 --mysql-db=sbtest --table-size=1000000 --tables=10 --threads=32 --events=999999999 prepare
 ```
 
 ##### 4. 运行测试
@@ -75,7 +73,6 @@ sysbench oltp_read_write.lua --time=300 --mysql-host=10.120.68.91 --mysql-port=3
 
 ```shell
 sysbench oltp_read_write.lua --time=300 --mysql-host=10.120.68.91 --mysql-port=3306 --mysql-user=root --mysql-password=xkjc_123 --mysql-db=sbtest --table-size=1000000 --tables=10 --threads=16 --events=999999999 --report-interval=10 cleanup
-
 ```
 
 ##### 6. 效果对比
@@ -86,16 +83,17 @@ buffer_pool_size 默认为 128M 时，性能如下：
 
 ![150923](https://image.yuhaowin.com/2023/06/06/150923.png)
 
-buffer_pool_size 默认为 6G 时，性能如下：
+buffer_pool_size 调整为 6G 时，性能如下：
 
 ![151022](https://image.yuhaowin.com/2023/06/06/151022.png)
 
 ### innodb_buffer_pool_size 无法动态调整到 1G 以下问题
 
-如果需要调整 innodb_buffer_pool_size  至 1G 以下，innodb_buffer_pool_instances 参数值必须是 1，否则会报错。如果配置的 innodb_buffer_pool_size 大于 1G，[innodb_buffer_pool_instances 没有手动配置
-则会自动配置为 8](https://dev.mysql.com/doc/refman/8.0/en/innodb-parameters.html#sysvar_innodb_buffer_pool_instances)。
+如果需要调整 innodb_buffer_pool_size 至 1G 以下，innodb_buffer_pool_instances 参数值必须是 1，否则会报错。
 
-```shell
+如果配置的 innodb_buffer_pool_size 大于 1G，[innodb_buffer_pool_instances 没有手动配置
+则会自动配置为 8](https://dev.mysql.com/doc/refman/8.0/en/innodb-parameters.html#sysvar_innodb_buffer_pool_instances)
+。此时无法把 innodb_buffer_pool_size 动态调整到 1G 以下。
 
 ### 参考
 
