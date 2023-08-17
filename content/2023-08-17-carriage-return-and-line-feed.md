@@ -42,13 +42,14 @@ od -c filename
 这将会以十六进制和字符形式显示文件内容，您可以在输出中找到回车换行字符（\r 和 \n）。
 
 
-## 常用文本编辑器和 IDE 中的换行符设置
-> 一般来说文本编辑器也都可以选择使用不同的行分隔符。
+## 常用文本编辑器和 IDE 中行分隔符的设置
+> 一般文本编辑器都可以选择使用不同的行分隔符。
 
 + Sublime Text
 > View -> Line Endings
  
 ![110302](https://image.yuhaowin.com/2023/08/17/110302.png)
+
 + JetBrains IDE
 > Settings -> Editor -> Code Style -> Line separator (for new files)
 
