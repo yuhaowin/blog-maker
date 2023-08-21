@@ -73,9 +73,31 @@ private void init(MyClass objVar) {
 }
 ```
 
+#### C++ 是支持引用传递的
+
+```c++
+#include <iostream>
+
+int func(int& a, int& b)
+{
+    a = 3;
+    b = 4;
+    return a + b;
+}
+
+int main（）
+{
+    int a = 1, b = 2, c = func(a, a);
+    std::cout << a << b<< c; // 428
+}
+```
+
+
+
 + [参考资料1](https://www.cnblogs.com/9513-/p/8484071.html)
 + [参考资料2](https://www.zhihu.com/question/31203609)
 + [参考资料3](https://stackoverflow.com/questions/373419/whats-the-difference-between-passing-by-reference-vs-passing-by-value/36208432)
 + [参考资料4](https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value)
 + [go 是值传递](https://www.flysnow.org/2018/02/24/golang-function-parameters-passed-by-value.html)
 + [C++ 值传递、指针传递、引用传递详解](https://www.cnblogs.com/yanlingyin/archive/2011/12/07/2278961.html)
++ [C++ - Pass by Reference](https://www.youtube.com/watch?v=gyIQ8YPeTuk)
