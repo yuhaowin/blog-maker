@@ -8,7 +8,7 @@ body {
     margin: auto;
     max-width: 72em;
     background: #fefefe;
-    font-family: Fira Code, Monaco, Consolas, Ubuntu Mono, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, monospace, sans-serif;
+    font-family: "LXGW WenKai Screen", Fira Code, Monaco, Consolas, Ubuntu Mono, PingFang SC, Hiragino Sans GB, Microsoft YaHei, WenQuanYi Micro Hei, monospace, sans-serif;
 }
 
 blockquote {
