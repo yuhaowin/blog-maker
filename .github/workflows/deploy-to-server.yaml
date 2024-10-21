@@ -1,13 +1,14 @@
 name: deploy-to-server
 on: [ push ]
 jobs:
-  check-bats-version:
+  deploy-to-server:
     runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout code
+        uses: actions/checkout@v4
       - name: make blog-maker executable
         run: chmod +x ./blog-maker
-      - name: run blog-maker to generate server site
+      - name: generate server site
         run: ./blog-maker -o ../blog
       - name: deploy to server
         uses: easingthemes/ssh-deploy@main
