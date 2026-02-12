@@ -161,6 +161,23 @@ table tr:nth-child(even) {
     display: inline-block;
 }
 
+.arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 4px;
+    vertical-align: middle;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #007bff;
+    transition: transform 0.3s ease;
+}
+
+.navbar-dropdown:hover .arrow {
+    transform: rotate(180deg);
+    border-top-color: #0056b3;
+}
+
 .navbar-menu {
     display: none;
     position: absolute;
@@ -169,7 +186,9 @@ table tr:nth-child(even) {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     border: 1px solid #ccc;
-    margin-top: 5px;
+    margin-top: 0;
+    padding-top: 5px;
+    top: 100%;
 }
 
 .navbar-dropdown:hover .navbar-menu {

@@ -1,9 +1,8 @@
 {{define "_nav"}}
 <header>
     <nav class="navbar">
-        <span class="navbar-item"><a class="nav-btn" href="/">blogs</a></span>
         <span class="navbar-item navbar-dropdown">
-            <a class="nav-btn" href="#years">years ▼</a>
+            <a class="nav-btn" href="#years">years <span class="arrow"></span></a>
             <div class="navbar-menu">
                 <a class="navbar-menu-item" href="/2026/">2026</a>
                 <a class="navbar-menu-item" href="/2025/">2025</a>
