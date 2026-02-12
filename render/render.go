@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 )
 
@@ -29,13 +30,33 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 	if doesNeedRenderAll {
 		log.Println("Render all files")
 	}
+
+	// Extract years from renderList early
+	yearsMap := make(map[string]bool)
+	for k, v := range renderList {
+		if !v.IsContent() {
+			continue
+		}
+		paths := strings.Split(k, "/")
+		if len(paths) == 3 {
+			// /year/file
+			yearsMap[paths[1]] = true
+		}
+	}
+	var years []string
+	for year := range yearsMap {
+		years = append(years, year)
+	}
+	sort.Sort(sort.Reverse(sort.StringSlice(years)))
+
 	postTemplate := GetTemplate(tmplPath, "post.html.tpl")
 	for key, info := range renderList {
 		if info.IsContent() && (doesNeedRenderAll || info.NeedRender) {
 			log.Printf("Rendering %s \n", info.GetMDOutPath(outputPath))
 			err := GeneratePost(postTemplate,
 				info.GetMDPath(contentPath),
-				info.GetMDOutPath(outputPath))
+				info.GetMDOutPath(outputPath),
+				years)
 			if err != nil {
 				log.Fatal(err.Error())
 				break
@@ -74,7 +95,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 
 	for k, v := range sepratedList {
 		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
-		err := GenerateList(indexTemplate, v, filepath.Join(outputPath, k, "index.html"))
+		err := GenerateList(indexTemplate, v, years, filepath.Join(outputPath, k, "index.html"))
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -93,7 +114,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 	}
 	if len(allBlogsIndex) > 0 {
 		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
-		err := GenerateList(indexTemplate, allBlogsIndex, filepath.Join(outputPath, "index.html"))
+		err := GenerateList(indexTemplate, allBlogsIndex, years, filepath.Join(outputPath, "index.html"))
 		if err != nil {
 			log.Fatal(err)
 		}

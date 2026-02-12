@@ -41,9 +41,10 @@ func init() {
 type Post struct {
 	Title   string
 	Content string
+	Years   []string
 }
 
-func GeneratePost(tmpl *template.Template, mdPath, outputPath string) error {
+func GeneratePost(tmpl *template.Template, mdPath, outputPath string, years []string) error {
 	if _, err := os.Stat(outputPath); os.IsNotExist(err) {
 		//make the dir first
 		parentDir := filepath.Dir(outputPath)
@@ -57,10 +58,10 @@ func GeneratePost(tmpl *template.Template, mdPath, outputPath string) error {
 	if err != nil {
 		return err
 	}
-	return GeneratePostOut(tmpl, mdPath, outFile)
+	return GeneratePostOut(tmpl, mdPath, years, outFile)
 }
 
-func GeneratePostOut(tmpl *template.Template, mdPath string, writer io.Writer) error {
+func GeneratePostOut(tmpl *template.Template, mdPath string, years []string, writer io.Writer) error {
 	mdFile, err := ioutil.ReadFile(mdPath)
 	if err != nil {
 		return err
@@ -77,6 +78,7 @@ func GeneratePostOut(tmpl *template.Template, mdPath string, writer io.Writer) e
 	var p Post
 	p.Title = title
 	p.Content = buf.String()
+	p.Years = years
 	return tmpl.Execute(writer, &p)
 }
 
@@ -117,15 +119,20 @@ func (a ByDate) Less(i, j int) bool {
 	return a[i].CreateDateStr > a[j].CreateDateStr
 }
 
-func GenerateList(tmpl *template.Template, contentList ContentList, outputFile string) error {
+type IndexPageData struct {
+	Posts []PostTitleList
+	Years []string
+}
+
+func GenerateList(tmpl *template.Template, contentList ContentList, years []string, outputFile string) error {
 	outFile, err := os.OpenFile(outputFile, os.O_CREATE|os.O_RDWR|os.O_TRUNC, 0766)
 	if err != nil {
 		return err
 	}
-	return GenerateListOut(tmpl, contentList, outFile)
+	return GenerateListOut(tmpl, contentList, years, outFile)
 }
 
-func GenerateListOut(tmpl *template.Template, contentList ContentList, output io.Writer) error {
+func GenerateListOut(tmpl *template.Template, contentList ContentList, years []string, output io.Writer) error {
 	var l ByDate
 	for _, content := range contentList {
 		if content.IsContent() {
@@ -138,10 +145,15 @@ func GenerateListOut(tmpl *template.Template, contentList ContentList, output io
 		}
 	}
 	sort.Sort(&l)
-	return tmpl.Execute(output, &l)
+
+	pageData := IndexPageData{
+		Posts: l,
+		Years: years,
+	}
+	return tmpl.Execute(output, &pageData)
 }
 
-func GenerateListWithPath(tmpl *template.Template, contentList ContentList, path string, output io.Writer) error {
+func GenerateListWithPath(tmpl *template.Template, contentList ContentList, path string, years []string, output io.Writer) error {
 	var l ByDate
 	for _, content := range contentList {
 		if content.IsContent() && strings.Index(content.IndexKey, path) == 0 {
@@ -154,7 +166,12 @@ func GenerateListWithPath(tmpl *template.Template, contentList ContentList, path
 		}
 	}
 	sort.Sort(&l)
-	return tmpl.Execute(output, &l)
+
+	pageData := IndexPageData{
+		Posts: l,
+		Years: years,
+	}
+	return tmpl.Execute(output, &pageData)
 }
 
 func GetTemplate(tmplPath, tmplFile string) *template.Template {

@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
+	"strings"
 )
 
 var (
@@ -51,6 +53,26 @@ func startServer() error {
 	server.IndexTemplate = render.GetTemplate(cwdPath(templatePath), indexTemplate)
 	server.ContentDir = cwdPath(contentFolder)
 	server.PostList.UpdateRenderList(server.ContentDir)
+
+	// Extract years from PostList
+	yearsMap := make(map[string]bool)
+	for k, v := range server.PostList {
+		if !v.IsContent() {
+			continue
+		}
+		paths := strings.Split(k, "/")
+		if len(paths) == 3 {
+			// /year/file
+			yearsMap[paths[1]] = true
+		}
+	}
+	var years []string
+	for year := range yearsMap {
+		years = append(years, year)
+	}
+	sort.Sort(sort.Reverse(sort.StringSlice(years)))
+	server.Years = years
+
 	return http.ListenAndServe(addr, http.HandlerFunc(server.Viewing))
 }
 

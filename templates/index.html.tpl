@@ -12,9 +12,9 @@
 </head>
 
 <body>
-    {{template "_nav"}}
+    {{template "_nav" .Years}}
     <article class="posts">
-        {{range .}}
+        {{range .Posts}}
         <div class="posts-item">
             <a href="{{.Link}}">{{.Title}}</a>
             <small>{{.CreateDateStr}}</small>
