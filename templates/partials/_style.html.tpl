@@ -156,6 +156,38 @@ table tr:nth-child(even) {
     content: " ]"
 }
 
+.navbar-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.navbar-menu {
+    display: none;
+    position: absolute;
+    background-color: #fefefe;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+.navbar-dropdown:hover .navbar-menu {
+    display: block;
+}
+
+.navbar-menu-item {
+    color: #007bff;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.navbar-menu-item:hover {
+    background-color: #f1f1f1;
+    color: #0056b3;
+}
+
 @media screen and (min-width: 300px) and (max-width: 700px) {
     .navbar {
         width: 100%;
@@ -179,6 +211,11 @@ table tr:nth-child(even) {
         text-overflow: ellipsis;
         overflow: hidden;
         text-align: center;
+    }
+
+    .navbar-menu {
+        left: 0;
+        min-width: 100px;
     }
 }
 

@@ -54,13 +54,17 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 		}
 		paths := strings.Split(k, "/")
 		var indexKey string
+		// Handle different path structures:
+		// /year/file -> ["", "year", "file"] -> len=3 -> indexKey="year"
+		// /videos/year/file -> ["", "videos", "year", "file"] -> len=4 -> indexKey="videos/year"
 		if len(paths) == 3 {
+			// /year/file
 			indexKey = paths[1]
+		} else if len(paths) == 4 {
+			// /category/year/file
+			indexKey = paths[1] + "/" + paths[2]
 		} else {
 			indexKey = "/"
-		}
-		if len(paths) > 3 {
-			panic("unsupported sub dictionary")
 		}
 		if _, ok := sepratedList[indexKey]; !ok {
 			sepratedList[indexKey] = make(ContentList)
@@ -71,6 +75,25 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 	for k, v := range sepratedList {
 		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
 		err := GenerateList(indexTemplate, v, filepath.Join(outputPath, k, "index.html"))
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// Generate root index page with all blogs (excluding videos)
+	log.Println("Render root index")
+	allBlogsIndex := make(ContentList)
+	for k, v := range sepratedList {
+		if k != "videos" && !strings.Contains(k, "videos") {
+			// Merge all year-based blogs
+			for contentKey, contentVal := range v {
+				allBlogsIndex[contentKey] = contentVal
+			}
+		}
+	}
+	if len(allBlogsIndex) > 0 {
+		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
+		err := GenerateList(indexTemplate, allBlogsIndex, filepath.Join(outputPath, "index.html"))
 		if err != nil {
 			log.Fatal(err)
 		}
