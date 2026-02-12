@@ -2,8 +2,9 @@
 <header>
     <nav class="navbar">
         <span class="navbar-item navbar-dropdown">
-            <a class="nav-btn" href="#years">years <span class="arrow"></span></a>
+            <a class="nav-btn" href="#blogs">blogs <span class="arrow"></span></a>
             <div class="navbar-menu">
+                <a class="navbar-menu-item" href="/">all posts</a>
                 <a class="navbar-menu-item" href="/2026/">2026</a>
                 <a class="navbar-menu-item" href="/2025/">2025</a>
                 <a class="navbar-menu-item" href="/2024/">2024</a>
