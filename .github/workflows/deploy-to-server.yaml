@@ -15,8 +15,8 @@ jobs:
       - name: generate server site
         run: ./blog-maker -o ../blog
       - name: deploy to server
-        uses: easingthemes/ssh-deploy@main
-        env:
+        uses: easingthemes/ssh-deploy@v4
+        with:
           ARGS: "-rltDvP --chmod=Dugo=rx,Fugo=r --delete"
           SOURCE: ../blog
           TARGET: ~/app/nginx/resource/
