@@ -3,7 +3,7 @@
 Compiling and building binary executable file from source code:
 
 ```bash
-go build -o blog-maker main.go
+go build -o blog-maker .
 ```
 
 ### Showing your website on local

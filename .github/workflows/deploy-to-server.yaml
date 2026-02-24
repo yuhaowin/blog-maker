@@ -6,8 +6,12 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4
-      - name: make blog-maker executable
-        run: chmod +x ./blog-maker
+      - name: setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: build blog-maker
+        run: go build -o blog-maker .
       - name: generate server site
         run: ./blog-maker -o ../blog
       - name: deploy to server
