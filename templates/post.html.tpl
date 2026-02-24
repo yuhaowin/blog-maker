@@ -9,7 +9,7 @@
     {{template "_script"}}
 </head>
 <body>
-    {{template "_nav" .Years}}
+    {{template "_nav" .}}
     <article>
         {{ .Content}}
     </article>

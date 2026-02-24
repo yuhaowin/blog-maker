@@ -56,6 +56,7 @@ func startServer() error {
 
 	// Extract years from PostList
 	yearsMap := make(map[string]bool)
+	videoYearsMap := make(map[string]bool)
 	for k, v := range server.PostList {
 		if !v.IsContent() {
 			continue
@@ -64,6 +65,9 @@ func startServer() error {
 		if len(paths) == 3 {
 			// /year/file
 			yearsMap[paths[1]] = true
+		} else if len(paths) == 4 && paths[1] == "videos" {
+			// /videos/year/file
+			videoYearsMap[paths[2]] = true
 		}
 	}
 	var years []string
@@ -72,6 +76,12 @@ func startServer() error {
 	}
 	sort.Sort(sort.Reverse(sort.StringSlice(years)))
 	server.Years = years
+	var videoYears []string
+	for year := range videoYearsMap {
+		videoYears = append(videoYears, year)
+	}
+	sort.Sort(sort.Reverse(sort.StringSlice(videoYears)))
+	server.VideoYears = videoYears
 
 	return http.ListenAndServe(addr, http.HandlerFunc(server.Viewing))
 }

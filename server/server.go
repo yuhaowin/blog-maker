@@ -14,6 +14,7 @@ type ViewServer struct {
 	PostTemplate  *template.Template
 	IndexTemplate *template.Template
 	Years         []string
+	VideoYears    []string
 }
 
 // Viewing viewServer 结构体的方法
@@ -21,10 +22,10 @@ func (server *ViewServer) Viewing(writer http.ResponseWriter, request *http.Requ
 	var err error
 	p := strings.TrimSpace(request.URL.Path)
 	if p[len(p)-1] == '/' {
-		err = render.GenerateListWithPath(server.IndexTemplate, server.PostList, p, server.Years, writer)
+		err = render.GenerateListWithPath(server.IndexTemplate, server.PostList, p, server.Years, server.VideoYears, writer)
 	} else {
 		if p, ok := server.PostList[p]; ok {
-			err = render.GeneratePostOut(server.PostTemplate, p.GetMDPath(server.ContentDir), server.Years, writer)
+			err = render.GeneratePostOut(server.PostTemplate, p.GetMDPath(server.ContentDir), server.Years, server.VideoYears, writer)
 		} else {
 			writer.WriteHeader(http.StatusNotFound)
 			return

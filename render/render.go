@@ -33,6 +33,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 
 	// Extract years from renderList early
 	yearsMap := make(map[string]bool)
+	videoYearsMap := make(map[string]bool)
 	for k, v := range renderList {
 		if !v.IsContent() {
 			continue
@@ -41,6 +42,9 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 		if len(paths) == 3 {
 			// /year/file
 			yearsMap[paths[1]] = true
+		} else if len(paths) == 4 && paths[1] == "videos" {
+			// /videos/year/file
+			videoYearsMap[paths[2]] = true
 		}
 	}
 	var years []string
@@ -48,6 +52,11 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 		years = append(years, year)
 	}
 	sort.Sort(sort.Reverse(sort.StringSlice(years)))
+	var videoYears []string
+	for year := range videoYearsMap {
+		videoYears = append(videoYears, year)
+	}
+	sort.Sort(sort.Reverse(sort.StringSlice(videoYears)))
 
 	postTemplate := GetTemplate(tmplPath, "post.html.tpl")
 	for key, info := range renderList {
@@ -56,7 +65,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 			err := GeneratePost(postTemplate,
 				info.GetMDPath(contentPath),
 				info.GetMDOutPath(outputPath),
-				years)
+				years, videoYears)
 			if err != nil {
 				log.Fatal(err.Error())
 				break
@@ -95,7 +104,7 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 
 	for k, v := range sepratedList {
 		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
-		err := GenerateList(indexTemplate, v, years, filepath.Join(outputPath, k, "index.html"))
+		err := GenerateList(indexTemplate, v, years, videoYears, filepath.Join(outputPath, k, "index.html"))
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -114,7 +123,25 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 	}
 	if len(allBlogsIndex) > 0 {
 		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
-		err := GenerateList(indexTemplate, allBlogsIndex, years, filepath.Join(outputPath, "index.html"))
+		err := GenerateList(indexTemplate, allBlogsIndex, years, videoYears, filepath.Join(outputPath, "index.html"))
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// Generate all-videos index page
+	log.Println("Render videos index")
+	allVideosIndex := make(ContentList)
+	for k, v := range sepratedList {
+		if strings.Contains(k, "videos") {
+			for contentKey, contentVal := range v {
+				allVideosIndex[contentKey] = contentVal
+			}
+		}
+	}
+	if len(allVideosIndex) > 0 {
+		indexTemplate := GetTemplate(tmplPath, "index.html.tpl")
+		err := GenerateList(indexTemplate, allVideosIndex, years, videoYears, filepath.Join(outputPath, "videos", "index.html"))
 		if err != nil {
 			log.Fatal(err)
 		}

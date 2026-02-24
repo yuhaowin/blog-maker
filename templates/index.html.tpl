@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    {{template "_nav" .Years}}
+    {{template "_nav" .}}
     <article class="posts">
         {{range .Posts}}
         <div class="posts-item">
