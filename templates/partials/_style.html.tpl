@@ -179,38 +179,92 @@ main {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── Mobile menu ── */
+/* ── 全屏菜单覆盖层 ── */
 .mobile-menu {
     display: none;
-    flex-direction: column;
-    border-bottom: 1px solid #ebebeb;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
     background: #fff;
-    padding: 0.5rem 0;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 .mobile-menu.open {
     display: flex;
+    animation: mobileMenuIn 0.2s ease both;
+}
+
+@keyframes mobileMenuIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    height: 56px;
+    border-bottom: 1px solid #ebebeb;
+    flex-shrink: 0;
+}
+
+.mobile-menu-close {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 0;
+}
+
+.mobile-menu-close:hover { background: #f5f5f5; }
+
+.mobile-menu-close span {
+    display: block;
+    position: absolute;
+    left: 6px;
+    width: 20px;
+    height: 2px;
+    background: #1a1a1a;
+    border-radius: 2px;
+    top: 50%;
+}
+
+.mobile-menu-close span:nth-child(1) { transform: translateY(-50%) rotate(45deg); }
+.mobile-menu-close span:nth-child(2) { transform: translateY(-50%) rotate(-45deg); }
+
+.mobile-menu-body {
+    padding: 0.5rem 0;
+    flex: 1;
 }
 
 .mobile-menu-section {
-    padding: 4px 1.5rem 2px;
+    display: block;
+    padding: 12px 1.5rem 4px;
     font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: #aaa;
-    margin-top: 8px;
+    margin-top: 4px;
 }
 
-.mobile-menu a {
+.mobile-menu-body a {
+    display: block;
     padding: 10px 1.5rem;
     color: #333;
     text-decoration: none;
     font-size: 0.95rem;
 }
 
-.mobile-menu a:hover { background: #f9f9f9; }
-.mobile-menu a:visited { color: #333; }
+.mobile-menu-body a:hover   { background: #f9f9f9; }
+.mobile-menu-body a:visited { color: #333; }
+
+body.menu-open { overflow: hidden; }
 
 /* ── Article typography ── */
 article h1 {

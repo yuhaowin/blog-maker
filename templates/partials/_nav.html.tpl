@@ -37,8 +37,17 @@
         </button>
     </div>
 
-    <!-- Mobile menu -->
-    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+</header>
+
+<!-- 全屏菜单覆盖层 -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-header">
+        <a class="site-name" href="/">yuhaowin</a>
+        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="关闭菜单">
+            <span></span><span></span>
+        </button>
+    </div>
+    <nav class="mobile-menu-body">
         <span class="mobile-menu-section">Blogs</span>
         <a href="/">all posts</a>
         {{range .Years}}
@@ -49,6 +58,6 @@
         {{range .VideoYears}}
         <a href="/videos/{{.}}/">{{.}}</a>
         {{end}}
-    </div>
-</header>
+    </nav>
+</div>
 {{end}}
