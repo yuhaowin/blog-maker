@@ -1,4 +1,4 @@
-深分页（deep pagination）在 MySQL 的应对策略
+# 深分页（deep pagination）在 MySQL 的应对策略
 
 Keyset Pagination（也叫 Seek / 游标分页）
 原理：不使用 OFFSET，而用已知的“最后一条记录的排序键”做 WHERE 过滤（比如自增主键、时间戳或组合索引），做索引查找，效率非常高。
