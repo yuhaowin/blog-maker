@@ -112,6 +112,15 @@ main {
     z-index: 200;
 }
 
+.nav-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 0;
+    right: 0;
+    height: 6px;
+}
+
 .nav-dropdown:hover .nav-dropdown-menu {
     display: block;
 }
