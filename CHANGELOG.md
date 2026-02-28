@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-02-28
+
+### Fixed
+- Dropdown menu hover lost when moving mouse into the menu gap — added `::before` pseudo-element bridge to fill the 6px gap between trigger button and menu
+
+### Changed
+- Mobile menu redesigned as full-screen overlay (fixed positioning, covers entire screen)
+  - Opens with a fade-in slide-down animation
+  - Overlay header shows site name + X close button
+  - Body scroll locked while menu is open
+  - Closes on X click, Escape key, or clicking any nav link
+
 ## 2026-02-25
 
 ### Added
