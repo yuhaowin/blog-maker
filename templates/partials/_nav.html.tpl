@@ -1,24 +1,54 @@
 {{define "_nav"}}
-<header>
-    <nav class="navbar">
-        <span class="navbar-item navbar-dropdown">
-            <a class="nav-btn" href="#blogs">blogs <span class="arrow"></span></a>
-            <div class="navbar-menu">
-                <a class="navbar-menu-item" href="/">all posts</a>
-                {{range .Years}}
-                <a class="navbar-menu-item" href="/{{.}}/">{{.}}</a>
-                {{end}}
+<header class="site-header">
+    <div class="nav-inner">
+        <a class="site-name" href="/">yuhaowin</a>
+
+        <!-- Desktop nav -->
+        <nav class="nav-links" aria-label="主导航">
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-toggle" aria-haspopup="true">
+                    blogs <span class="nav-arrow"></span>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="/">all posts</a>
+                    {{range .Years}}
+                    <a href="/{{.}}/">{{.}}</a>
+                    {{end}}
+                </div>
             </div>
-        </span>
-        <span class="navbar-item navbar-dropdown">
-            <a class="nav-btn" href="#videos">videos <span class="arrow"></span></a>
-            <div class="navbar-menu">
-                <a class="navbar-menu-item" href="/videos/">all videos</a>
-                {{range .VideoYears}}
-                <a class="navbar-menu-item" href="/videos/{{.}}/">{{.}}</a>
-                {{end}}
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-toggle" aria-haspopup="true">
+                    videos <span class="nav-arrow"></span>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="/videos/">all videos</a>
+                    {{range .VideoYears}}
+                    <a href="/videos/{{.}}/">{{.}}</a>
+                    {{end}}
+                </div>
             </div>
-        </span>
-    </nav>
+        </nav>
+
+        <!-- Hamburger (mobile) -->
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="展开菜单" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <span class="mobile-menu-section">Blogs</span>
+        <a href="/">all posts</a>
+        {{range .Years}}
+        <a href="/{{.}}/">{{.}}</a>
+        {{end}}
+        <span class="mobile-menu-section">Videos</span>
+        <a href="/videos/">all videos</a>
+        {{range .VideoYears}}
+        <a href="/videos/{{.}}/">{{.}}</a>
+        {{end}}
+    </div>
 </header>
 {{end}}
