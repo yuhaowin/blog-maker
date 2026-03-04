@@ -27,6 +27,9 @@
                     {{end}}
                 </div>
             </div>
+            <a href="/feed.xml" class="nav-rss-link" aria-label="RSS Feed">
+                RSS
+            </a>
         </nav>
 
         <!-- Hamburger (mobile) -->
@@ -58,6 +61,8 @@
         {{range .VideoYears}}
         <a href="/videos/{{.}}/">{{.}}</a>
         {{end}}
+        <span class="mobile-menu-section">Subscribe</span>
+        <a href="/feed.xml">RSS Feed</a>
     </nav>
 </div>
 {{end}}

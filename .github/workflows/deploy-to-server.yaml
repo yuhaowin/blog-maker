@@ -13,7 +13,7 @@ jobs:
       - name: build blog-maker
         run: go build -o blog-maker .
       - name: generate server site
-        run: ./blog-maker -o ../blog
+        run: ./blog-maker -o ../blog -url https://blog.yuhaowin.com -title "yuhaowin" -desc "yuhaowin's blog"
       - name: deploy to server
         uses: easingthemes/ssh-deploy@v4
         with:

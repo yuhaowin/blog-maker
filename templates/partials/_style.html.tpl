@@ -143,6 +143,30 @@ main {
     color: #444;
 }
 
+.nav-rss-link {
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: #555;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+.nav-rss-link:hover {
+    background: #f5f5f5;
+    color: #1a1a1a;
+}
+
+.nav-rss-link:visited {
+    color: #555;
+}
+
 /* ── Hamburger ── */
 .nav-hamburger {
     display: none;
