@@ -228,7 +228,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.25rem;
+    padding: 0 1.5rem;
     height: 56px;
     border-bottom: 1px solid #ebebeb;
     flex-shrink: 0;
