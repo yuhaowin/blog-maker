@@ -216,12 +216,12 @@ main {
 
 .mobile-menu.open {
     display: flex;
-    animation: mobileMenuIn 0.2s ease both;
+    animation: mobileMenuIn 0.15s ease both;
 }
 
 @keyframes mobileMenuIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 .mobile-menu-header {
