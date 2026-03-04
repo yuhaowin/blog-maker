@@ -9,18 +9,33 @@ import (
 )
 
 type ViewServer struct {
-	ContentDir    string
-	PostList      render.ContentList
-	PostTemplate  *template.Template
-	IndexTemplate *template.Template
-	Years         []string
-	VideoYears    []string
+	ContentDir      string
+	PostList        render.ContentList
+	PostTemplate    *template.Template
+	IndexTemplate   *template.Template
+	Years           []string
+	VideoYears      []string
+	SiteURL         string
+	SiteTitle       string
+	SiteDescription string
 }
 
 // Viewing viewServer 结构体的方法
 func (server *ViewServer) Viewing(writer http.ResponseWriter, request *http.Request) {
 	var err error
 	p := strings.TrimSpace(request.URL.Path)
+
+	// Handle RSS feed request
+	if p == "/feed.xml" {
+		writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
+		err = render.GenerateRSSOut(server.PostList, server.ContentDir, server.SiteURL, server.SiteTitle, server.SiteDescription, writer)
+		if err != nil {
+			log.Println(err)
+			writer.WriteHeader(http.StatusInternalServerError)
+		}
+		return
+	}
+
 	if p[len(p)-1] == '/' {
 		err = render.GenerateListWithPath(server.IndexTemplate, server.PostList, p, server.Years, server.VideoYears, writer)
 	} else {

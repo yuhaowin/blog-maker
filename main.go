@@ -20,7 +20,10 @@ var (
 	templatePath  = "templates"
 	postTemplate  = "post.html.tpl"
 	indexTemplate = "index.html.tpl"
-	outputFolder  = flag.String("o", "public", "")
+	outputFolder  = flag.String("o", "public", "output folder path")
+	siteURL       = flag.String("url", "", "site URL for RSS feed (e.g., https://example.com)")
+	siteTitle     = flag.String("title", "My Blog", "site title for RSS feed")
+	siteDesc      = flag.String("desc", "My Blog Description", "site description for RSS feed")
 )
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,7 +45,7 @@ func main() {
 		log.Println("Starting generation blog file...")
 		flag.Parse()
 		outputPath, _ := filepath.Abs(*outputFolder)
-		render.Render(cwdPath(templatePath), cwdPath(contentFolder), filepath.Join(outputPath, metaPath), outputPath)
+		render.RenderWithConfig(cwdPath(templatePath), cwdPath(contentFolder), filepath.Join(outputPath, metaPath), outputPath, *siteURL, *siteTitle, *siteDesc)
 	}
 }
 
@@ -53,6 +56,11 @@ func startServer() error {
 	server.IndexTemplate = render.GetTemplate(cwdPath(templatePath), indexTemplate)
 	server.ContentDir = cwdPath(contentFolder)
 	server.PostList.UpdateRenderList(server.ContentDir)
+
+	// RSS configuration for server mode
+	server.SiteURL = "http://localhost:8080"
+	server.SiteTitle = "My Blog"
+	server.SiteDescription = "My Blog Description"
 
 	// Extract years from PostList
 	yearsMap := make(map[string]bool)
@@ -83,6 +91,7 @@ func startServer() error {
 	sort.Sort(sort.Reverse(sort.StringSlice(videoYears)))
 	server.VideoYears = videoYears
 
+	log.Println("RSS feed available at http://localhost:8080/feed.xml")
 	return http.ListenAndServe(addr, http.HandlerFunc(server.Viewing))
 }
 
@@ -103,4 +112,5 @@ func cwdPath(subPath ...string) string {
 func printHelp() {
 	fmt.Println("./blog-maker s \n", "\trender all markdown files and then start a HTTP server to exhibit your website")
 	fmt.Println("./blog-maker -o path \n", "\trender all markdown files in content folder to path, default path is ./public")
+	fmt.Println("./blog-maker -o path -url https://example.com -title \"My Blog\" -desc \"Description\" \n", "\tgenerate RSS feed with site configuration")
 }

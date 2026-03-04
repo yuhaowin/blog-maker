@@ -9,6 +9,10 @@ import (
 )
 
 func Render(tmplPath, contentPath, metaPath, outputPath string) {
+	RenderWithConfig(tmplPath, contentPath, metaPath, outputPath, "", "", "")
+}
+
+func RenderWithConfig(tmplPath, contentPath, metaPath, outputPath, siteURL, siteTitle, siteDescription string) {
 	renderList := make(ContentList)
 	err := readContentInfo(renderList, metaPath)
 	if err != nil {
@@ -148,4 +152,12 @@ func Render(tmplPath, contentPath, metaPath, outputPath string) {
 	}
 
 	storeContentInfo(renderList, metaPath)
+
+	// Generate RSS feed if site URL is provided
+	if siteURL != "" {
+		err := GenerateRSS(renderList, contentPath, outputPath, siteURL, siteTitle, siteDescription)
+		if err != nil {
+			log.Printf("Error generating RSS feed: %v", err)
+		}
+	}
 }
