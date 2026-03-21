@@ -337,6 +337,39 @@ article img {
     border-radius: 8px;
     display: block;
     margin: 1.5em auto;
+    cursor: zoom-in;
+}
+
+/* ── Lightbox ── */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+
+.lightbox.open {
+    display: flex;
+    animation: lightboxIn 0.2s ease both;
+}
+
+@keyframes lightboxIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 6px;
+    object-fit: contain;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    animation: lightboxImgIn 0.2s ease both;
+    cursor: zoom-out;
 }
 
 article a {

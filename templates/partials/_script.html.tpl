@@ -8,6 +8,36 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Lightbox
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    var lbImg = document.createElement('img');
+    overlay.appendChild(lbImg);
+    document.body.appendChild(overlay);
+
+    document.querySelectorAll('article img').forEach(function (el) {
+        el.addEventListener('click', function () {
+            lbImg.src = el.src;
+            lbImg.alt = el.alt;
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    overlay.addEventListener('click', function () {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
     var btn      = document.getElementById('nav-hamburger');
     var menu     = document.getElementById('mobile-menu');
     var closeBtn = document.getElementById('mobile-menu-close');
